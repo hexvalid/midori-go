@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/hexvalid.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/midori-go.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tormdr/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/main.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" path="/usr/lib/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1eJjC0oNgrnOeZLAFcgsdRtC9es" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GO_FMT" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RunManager">
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="midori-go" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/tormdr/main.go" />
+      <package value="github.com/hexvalid/midori-go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build main.go" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1872" height="256" key="GridCell.Tab.0.bottom" timestamp="1594047698835">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state width="1872" height="256" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
+    <state width="1872" height="256" key="GridCell.Tab.0.center" timestamp="1594047698835">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state width="1872" height="256" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
+    <state width="1872" height="256" key="GridCell.Tab.0.left" timestamp="1594047698835">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state width="1872" height="256" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
+    <state width="1872" height="256" key="GridCell.Tab.0.right" timestamp="1594047698835">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state width="1872" height="256" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
+    <state x="449" y="161" key="SettingsEditor" timestamp="1594048387295">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state x="449" y="161" key="SettingsEditor/0.0.1920.1051@0.0.1920.1051" timestamp="1594048387295" />
+    <state x="555" y="262" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1594046865807">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state x="555" y="262" width="804" height="528" key="Vcs.Push.Dialog.v2/0.0.1920.1051@0.0.1920.1051" timestamp="1594046865807" />
+  </component>
+</project>

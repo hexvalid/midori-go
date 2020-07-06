@@ -36,10 +36,26 @@ var defaultArgs = []string{
 	//"ExitNodes", "51.75.52.118",
 }
 
+var log = logger.NewLog("tor", color.FgMagenta)
+
 const (
 	socksPortStart   = 20000
 	controlPortStart = 40000
 )
+
+type TorMDRConfig struct {
+	TorMDRBinaryPath    string
+	DataDirectory       string
+	HardwareAccel       bool
+	KeepalivePeriod     int
+	UseSocks5Proxy      bool
+	Socks5ProxyAddress  string
+	Socks5ProxyUserName string
+	Socks5ProxyPassword string
+	UseObfs4Proxy       bool
+	Obfs4ProxyPath      string
+	Obfs4Bridges        []string
+}
 
 type TorMDR struct {
 	cmd        *exec.Cmd
@@ -49,9 +65,14 @@ type TorMDR struct {
 	mutex      *sync.Mutex
 }
 
+func NewTorMDR(no uint, cfg *TorMDRConfig) *TorMDR {
+	tormdr := TorMDR{}
+	tormdr.cmd.Path = cfg.TorMDRBinaryPath
+
+	return &tormdr
+}
+
 func main() {
-	logger := logger.NewLog("tor", color.FgMagenta)
-	logger.Info("Hello from logger")
 	var args = []string{""}
 	args = append(args, defaultArgs...)
 	args = append(args, "SocksPort", "20000")
