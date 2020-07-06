@@ -2,26 +2,28 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"github.com/fatih/color"
-	"github.com/hexvalid/midori-go/logger"
+	"io"
+	"midori-go/logger"
 	"net/http"
-	"os"
 	"os/exec"
+	"path"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
-var defaultArgs = []string{
+var defaultArgs = []string{"",
 	"RunAsDaemon", "0",
 	"ClientOnly", "1",
 	"AvoidDiskWrites", "1",
 	"FetchHidServDescriptors", "0",
 	"FetchServerDescriptors", "1",
 	"FetchUselessDescriptors", "0",
-	"HardwareAccel", "1",
-	"KeepalivePeriod", "30",
 	"UseEntryGuards", "0",
 	"NumEntryGuards", "0",
 	"UseGuardFraction", "0",
@@ -36,11 +38,11 @@ var defaultArgs = []string{
 	//"ExitNodes", "51.75.52.118",
 }
 
-var log = logger.NewLog("tor", color.FgMagenta)
+var log = logger.NewLog("TorMDR", color.FgMagenta)
 
 const (
-	socksPortStart   = 20000
-	controlPortStart = 40000
+	socksPortStart   int = 20000
+	controlPortStart int = 40000
 )
 
 type TorMDRConfig struct {
@@ -59,64 +61,84 @@ type TorMDRConfig struct {
 
 type TorMDR struct {
 	cmd        *exec.Cmd
+	no         int
 	transport  *http.Transport
 	dataDir    string
 	bootStatus string
 	mutex      *sync.Mutex
+	stdoutPipe io.ReadCloser
 }
 
-func NewTorMDR(no uint, cfg *TorMDRConfig) *TorMDR {
-	tormdr := TorMDR{}
+func NewTorMDR(no int, cfg *TorMDRConfig) *TorMDR {
+	tormdr := TorMDR{no: no, cmd: &exec.Cmd{}}
 	tormdr.cmd.Path = cfg.TorMDRBinaryPath
-
+	tormdr.cmd.Args = append(tormdr.cmd.Args, defaultArgs...)
+	tormdr.cmd.Args = append(tormdr.cmd.Args, "SocksPort", strconv.Itoa(socksPortStart+no))
+	tormdr.cmd.Args = append(tormdr.cmd.Args, "ControlPort", strconv.Itoa(controlPortStart+no))
+	tormdr.cmd.Args = append(tormdr.cmd.Args, "DataDirectory", path.Join(cfg.DataDirectory, strconv.Itoa(no)))
+	tormdr.cmd.Args = append(tormdr.cmd.Args, "CacheDirectory", path.Join(cfg.DataDirectory, strconv.Itoa(no), "cache"))
+	tormdr.cmd.Args = append(tormdr.cmd.Args, "KeepalivePeriod", strconv.Itoa(cfg.KeepalivePeriod))
+	if cfg.HardwareAccel {
+		tormdr.cmd.Args = append(tormdr.cmd.Args, "HardwareAccel", "1")
+	} else {
+		tormdr.cmd.Args = append(tormdr.cmd.Args, "HardwareAccel", "0")
+	}
+	if cfg.UseSocks5Proxy {
+		tormdr.cmd.Args = append(tormdr.cmd.Args, "Socks5Proxy", cfg.Socks5ProxyAddress)
+		tormdr.cmd.Args = append(tormdr.cmd.Args, "Socks5ProxyUserName", cfg.Socks5ProxyUserName)
+		tormdr.cmd.Args = append(tormdr.cmd.Args, "Socks5ProxyPassword", cfg.Socks5ProxyPassword)
+	}
+	log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Initialized")
 	return &tormdr
 }
 
-func main() {
-	var args = []string{""}
-	args = append(args, defaultArgs...)
-	args = append(args, "SocksPort", "20000")
-	args = append(args, "ControlPort", "40000")
-	args = append(args, "DataDirectory", "/tmp/arya7")
-	args = append(args, "CacheDirectory", "/tmp/arya7/cache")
-
-	args = append(args, "Socks5Proxy", "40.70.243.118:32416")
-	args = append(args, "Socks5ProxyUserName", "e4cf6e290c0cf8ae8fb91fcf818e1e40")
-	args = append(args, "Socks5ProxyPassword", "a565ab1f3802afbf4d07c1674069d813")
-
-	//ExitNodes
-	cmd := &exec.Cmd{
-		Path: "/home/hexvalid/tormdr/tormdr",
-		Args: args,
-	}
-
-	cmdReader, err := cmd.StdoutPipe()
+func (tormdr *TorMDR) Start() (err error) {
+	log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Starting...")
+	tormdr.stdoutPipe, err = tormdr.cmd.StdoutPipe()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error creating StdoutPipe for Cmd", err)
-		return
+		return errors.New("can't access stdoutpipe of tormdr")
 	}
-	cmd.Start()
 
-	scanner := bufio.NewScanner(cmdReader)
-
+	tormdr.cmd.Start()
+	scanner := bufio.NewScanner(tormdr.stdoutPipe)
 	if scanner.Scan() {
 		fmt.Println("Version:", scanner.Text())
 	}
 
-	var bootStatus string
 	for scanner.Scan() {
 		line := scanner.Text()
-
 		if strings.Contains(line, "Bootstrapped") {
 			re := regexp.MustCompile(`\((.*?)\)`)
-			bootStatus = re.FindStringSubmatch(line)[1]
-			if bootStatus == "done" {
+			tormdr.bootStatus = re.FindStringSubmatch(line)[1]
+			log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Boot status: %s", tormdr.bootStatus)
+
+			if tormdr.bootStatus == "done" {
 				break
 			}
 		} else {
-			//fmt.Printf("\t > %s\n", line)
+			//todo: warning & ERROR
+			fmt.Printf("\t > %s\n", line)
 		}
 	}
 
-	fmt.Println("ended")
+	//todo: open control port and auth
+	return nil
+}
+
+func main() {
+
+	/*	args = append(args, "Socks5Proxy", "40.70.243.118:32416")
+		args = append(args, "Socks5ProxyUserName", "e4cf6e290c0cf8ae8fb91fcf818e1e40")
+		args = append(args, "Socks5ProxyPassword", "a565ab1f3802afbf4d07c1674069d813")*/
+
+	fmt.Println(path.Join("/tmp", strconv.Itoa(1)))
+	tormdr := NewTorMDR(1, &TorMDRConfig{
+		TorMDRBinaryPath: "/home/anon/tormdr/tormdr",
+		DataDirectory:    "/tmp",
+		KeepalivePeriod:  30,
+	})
+
+	tormdr.Start()
+	time.Sleep(1 * time.Minute)
+
 }

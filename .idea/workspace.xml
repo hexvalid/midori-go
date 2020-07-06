@@ -11,14 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="first commit">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/hexvalid.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/midori-go.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tormdr/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/main.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -75,28 +68,33 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1872" height="256" key="GridCell.Tab.0.bottom" timestamp="1594047698835">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="643" key="GridCell.Tab.0.bottom" timestamp="1594054555612">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="256" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
-    <state width="1872" height="256" key="GridCell.Tab.0.center" timestamp="1594047698835">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="643" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1594054555612" />
+    <state width="2514" height="643" key="GridCell.Tab.0.center" timestamp="1594054555611">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="256" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
-    <state width="1872" height="256" key="GridCell.Tab.0.left" timestamp="1594047698835">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="643" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1594054555611" />
+    <state width="2514" height="643" key="GridCell.Tab.0.left" timestamp="1594054555611">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="256" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
-    <state width="1872" height="256" key="GridCell.Tab.0.right" timestamp="1594047698835">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="643" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1594054555611" />
+    <state width="2514" height="643" key="GridCell.Tab.0.right" timestamp="1594054555611">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="256" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1594047698835" />
+    <state width="2514" height="643" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1594054555611" />
     <state x="449" y="161" key="SettingsEditor" timestamp="1594048387295">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
