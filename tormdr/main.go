@@ -7,7 +7,9 @@ import (
 	"github.com/fatih/color"
 	"io"
 	"midori-go/logger"
+	"net"
 	"net/http"
+	"os"
 	"os/exec"
 	"path"
 	"regexp"
@@ -38,7 +40,10 @@ var defaultArgs = []string{"",
 	//"ExitNodes", "51.75.52.118",
 }
 
-var log = logger.NewLog("TorMDR", color.FgMagenta)
+var (
+	log       = logger.NewLog("TorMDR", color.FgMagenta)
+	regexBoot = regexp.MustCompile(`\((.*?)\)`)
+)
 
 const (
 	socksPortStart   int = 20000
@@ -62,8 +67,8 @@ type TorMDRConfig struct {
 type TorMDR struct {
 	cmd        *exec.Cmd
 	no         int
+	ctrlConn   net.Conn
 	transport  *http.Transport
-	dataDir    string
 	bootStatus string
 	mutex      *sync.Mutex
 	stdoutPipe io.ReadCloser
@@ -88,57 +93,85 @@ func NewTorMDR(no int, cfg *TorMDRConfig) *TorMDR {
 		tormdr.cmd.Args = append(tormdr.cmd.Args, "Socks5ProxyUserName", cfg.Socks5ProxyUserName)
 		tormdr.cmd.Args = append(tormdr.cmd.Args, "Socks5ProxyPassword", cfg.Socks5ProxyPassword)
 	}
-	log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Initialized")
+	_ = os.MkdirAll(cfg.DataDirectory, os.ModePerm)
 	return &tormdr
 }
 
 func (tormdr *TorMDR) Start() (err error) {
-	log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Starting...")
-	tormdr.stdoutPipe, err = tormdr.cmd.StdoutPipe()
-	if err != nil {
-		return errors.New("can't access stdoutpipe of tormdr")
+	if tormdr.stdoutPipe, err = tormdr.cmd.StdoutPipe(); err != nil {
+		return err
 	}
 
-	tormdr.cmd.Start()
+	if err = tormdr.cmd.Start(); err != nil {
+		return err
+	}
+
 	scanner := bufio.NewScanner(tormdr.stdoutPipe)
 	if scanner.Scan() {
-		fmt.Println("Version:", scanner.Text())
+		versionLine := scanner.Text()
+		if strings.Contains(versionLine, "TorMDR=") {
+			versionParts := strings.Split(versionLine, " ")
+			log.SInfo(fmt.Sprintf("%03d", tormdr.no), "%s %s started with %s %s, %s %s and %s %s.",
+				color.MagentaString(strings.Split(versionParts[1], "=")[0]),
+				color.HiMagentaString(strings.Split(versionParts[1], "=")[1]),
+				color.CyanString(strings.Split(versionParts[2], "=")[0]),
+				color.HiCyanString(strings.Split(versionParts[2], "=")[1]),
+				color.CyanString(strings.Split(versionParts[3], "=")[0]),
+				color.HiCyanString(strings.Split(versionParts[3], "=")[1]),
+				color.CyanString(strings.Split(versionParts[4], "=")[0]),
+				color.HiCyanString(strings.Split(versionParts[4], "=")[1]),
+			)
+		} else {
+			errMsg := "TorMDR is responded unexpectedly"
+			log.SInfo(fmt.Sprintf("%03d", tormdr.no), color.RedString("(Error) %s"), errMsg)
+			return errors.New(errMsg)
+		}
 	}
+
+	//todo: make timeout
 
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.Contains(line, "Bootstrapped") {
-			re := regexp.MustCompile(`\((.*?)\)`)
-			tormdr.bootStatus = re.FindStringSubmatch(line)[1]
-			log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Boot status: %s", tormdr.bootStatus)
-
+			tormdr.bootStatus = regexBoot.FindStringSubmatch(line)[1]
+			log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Boot status: %s", color.BlueString(tormdr.bootStatus))
 			if tormdr.bootStatus == "done" {
 				break
 			}
-		} else {
-			//todo: warning & ERROR
-			fmt.Printf("\t > %s\n", line)
+		} else if strings.Contains(line, "[warn]") {
+			log.SInfo(fmt.Sprintf("%03d", tormdr.no), "%s%s", color.YellowString("(Warning)"),
+				strings.Split(line, "[warn]")[1])
+		} else if strings.Contains(line, "[err]") {
+			errMsg := strings.Split(line, "[err]")[1]
+			log.SInfo(fmt.Sprintf("%03d", tormdr.no), "%s%s", color.RedString("(Error)"), errMsg)
+			return errors.New(errMsg)
 		}
 	}
 
-	//todo: open control port and auth
+	tormdr.ctrlConn, err = net.Dial("tcp", "127.0.0.1:9051")
+	//auth ctrl
+
+	return nil
+}
+
+func (tormdr *TorMDR) Stop() (err error) {
+	//todo: exit over telnet
+
+	if tormdr.cmd.Process != nil {
+		_ = tormdr.cmd.Process.Kill()
+		_, _ = tormdr.cmd.Process.Wait()
+	}
 	return nil
 }
 
 func main() {
-
-	/*	args = append(args, "Socks5Proxy", "40.70.243.118:32416")
-		args = append(args, "Socks5ProxyUserName", "e4cf6e290c0cf8ae8fb91fcf818e1e40")
-		args = append(args, "Socks5ProxyPassword", "a565ab1f3802afbf4d07c1674069d813")*/
-
-	fmt.Println(path.Join("/tmp", strconv.Itoa(1)))
 	tormdr := NewTorMDR(1, &TorMDRConfig{
 		TorMDRBinaryPath: "/home/anon/tormdr/tormdr",
-		DataDirectory:    "/tmp",
+		DataDirectory:    "/tmp/tormdr_data",
 		KeepalivePeriod:  30,
 	})
-
+	fmt.Println(tormdr.cmd.Process == nil)
 	tormdr.Start()
-	time.Sleep(1 * time.Minute)
-
+	time.Sleep(3 * time.Second)
+	tormdr.Stop()
 }

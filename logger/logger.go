@@ -42,8 +42,3 @@ func (logger *Logger) SInfo(smsg, msg string, a ...interface{}) {
 	fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
 		logger.Color.Sprint(" "+logger.Name+"(")+smsg+logger.Color.Sprint("): ")+msg+"\n", a...)
 }
-func (logger *Logger) SError(smsg, msg string, a ...interface{}) {
-	fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
-		logger.Color.Sprint(" "+logger.Name+"(")+color.RedString("!")+smsg+
-		logger.Color.Sprint("): ")+msg+"\n", a...)
-}
