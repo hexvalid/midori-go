@@ -16,6 +16,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"sync"
+	"time"
 )
 
 var (
@@ -40,6 +42,7 @@ type TorMDR struct {
 	socksPort      int
 	controlPort    int
 	targetExitNode string
+	cacheDir       string
 }
 
 func NewTorMDR(no int, cfg *TorMDRConfig) (tormdr *TorMDR, err error) {
@@ -48,10 +51,12 @@ func NewTorMDR(no int, cfg *TorMDRConfig) (tormdr *TorMDR, err error) {
 	tormdr.cmd.Args = append(tormdr.cmd.Args, defaultArgs...)
 	tormdr.socksPort = socksPortStart + no
 	tormdr.controlPort = controlPortStart + no
+	dataDir := path.Join(cfg.DataDirectory, strconv.Itoa(no))
+	tormdr.cacheDir = path.Join(dataDir, "cache")
 	tormdr.cmd.Args = append(tormdr.cmd.Args, "SocksPort", strconv.Itoa(tormdr.socksPort))
 	tormdr.cmd.Args = append(tormdr.cmd.Args, "ControlPort", strconv.Itoa(tormdr.controlPort))
-	tormdr.cmd.Args = append(tormdr.cmd.Args, "DataDirectory", path.Join(cfg.DataDirectory, strconv.Itoa(no)))
-	tormdr.cmd.Args = append(tormdr.cmd.Args, "CacheDirectory", path.Join(cfg.DataDirectory, strconv.Itoa(no), "cache"))
+	tormdr.cmd.Args = append(tormdr.cmd.Args, "DataDirectory", dataDir)
+	tormdr.cmd.Args = append(tormdr.cmd.Args, "CacheDirectory", tormdr.cacheDir)
 	tormdr.cmd.Args = append(tormdr.cmd.Args, "KeepalivePeriod", strconv.Itoa(cfg.KeepalivePeriod))
 	if cfg.HardwareAccel {
 		tormdr.cmd.Args = append(tormdr.cmd.Args, "HardwareAccel", "1")
@@ -76,7 +81,6 @@ func NewTorMDR(no int, cfg *TorMDRConfig) (tormdr *TorMDR, err error) {
 func (tormdr *TorMDR) Start() (err error) {
 	log.SInfo(fmt.Sprintf("%03d", tormdr.no), "%s-%s %s starting...",
 		color.MagentaString("TorMDR"), color.CyanString("GoLib"), color.HiCyanString(goLibVersion))
-
 	if tormdr.stdoutPipe, err = tormdr.cmd.StdoutPipe(); err != nil {
 		return err
 	}
@@ -126,6 +130,15 @@ func (tormdr *TorMDR) Start() (err error) {
 			return errors.New(errMsg)
 		}
 	}
+
+	exitNodeCacheUpdateMutex.Lock()
+	if !exitNodeCachePopulated {
+		log.SInfo("ALL", "Populating Exit Node Cache...")
+		exitNodeCache, err = parseExitNodes(path.Join(tormdr.cacheDir, "cached-microdesc-consensus"))
+		log.SInfo("ALL", "%s Exit Node learned", color.YellowString(strconv.Itoa(len(exitNodeCache))))
+		exitNodeCachePopulated = true
+	}
+	exitNodeCacheUpdateMutex.Unlock()
 	return nil
 }
 
@@ -166,8 +179,22 @@ func (tormdr *TorMDR) SetExitNode(ip string) error {
 }
 
 func main() {
+	var wg sync.WaitGroup
 
-	tormdr, _ := NewTorMDR(1, &TorMDRConfig{
+	for i := 1; i < 500; i++ {
+		go func() {
+			wg.Add(1)
+			defer wg.Done()
+			x(i)
+		}()
+		time.Sleep(25 * time.Microsecond)
+	}
+
+	wg.Wait()
+}
+
+func x(no int) {
+	tormdr, _ := NewTorMDR(no, &TorMDRConfig{
 		TorMDRBinaryPath:    "/usr/bin/tormdr",
 		DataDirectory:       "/tmp/tormdr_data",
 		KeepalivePeriod:     60,
@@ -180,13 +207,11 @@ func main() {
 	if err := tormdr.Start(); err != nil {
 		panic(err)
 	}
-
 	client := &http.Client{
 		Transport: &http.Transport{Proxy: http.ProxyURL(tormdr.proxy)},
 	}
 	resp, _ := client.Get(ipCheckServer)
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(strings.TrimSpace(string(body)))
-
 	tormdr.Stop()
 }

@@ -6,6 +6,13 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
+)
+
+var (
+	exitNodeCachePopulated   bool
+	exitNodeCache            []ExitNode
+	exitNodeCacheUpdateMutex sync.Mutex
 )
 
 type ExitNode struct {
@@ -58,7 +65,6 @@ func parseExitNodes(path string) (exitNodeList []ExitNode, err error) {
 						valid:     strings.Contains(lineS, "Valid"),
 					})
 				}
-
 			}
 		}
 	} else {
