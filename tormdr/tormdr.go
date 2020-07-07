@@ -133,6 +133,7 @@ func (tormdr *TorMDR) Stop() (err error) {
 	//todo: check leak?
 	//todo: exit over telnet
 	if tormdr.cmd.Process != nil {
+		log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Stopping process...")
 		_ = tormdr.cmd.Process.Kill()
 		_, _ = tormdr.cmd.Process.Wait()
 	}
@@ -165,17 +166,17 @@ func (tormdr *TorMDR) SetExitNode(ip string) error {
 }
 
 func main() {
+
 	tormdr, _ := NewTorMDR(1, &TorMDRConfig{
-		TorMDRBinaryPath:    "/home/hexvalid/tormdr/tormdr",
+		TorMDRBinaryPath:    "/usr/bin/tormdr",
 		DataDirectory:       "/tmp/tormdr_data",
 		KeepalivePeriod:     60,
-		UseSocks5Proxy:      true,
+		UseSocks5Proxy:      false,
 		Socks5ProxyAddress:  "40.70.243.118:32416",
 		Socks5ProxyUserName: "e4cf6e290c0cf8ae8fb91fcf818e1e40",
 		Socks5ProxyPassword: "a565ab1f3802afbf4d07c1674069d813",
 	})
 
-	_ = tormdr.SetExitNode("185.220.101.8")
 	if err := tormdr.Start(); err != nil {
 		panic(err)
 	}
@@ -186,30 +187,6 @@ func main() {
 	resp, _ := client.Get(ipCheckServer)
 	body, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(strings.TrimSpace(string(body)))
-
-	if err := tormdr.NewCircuit(); err != nil {
-		panic(err)
-	}
-
-	client = &http.Client{
-		Transport: &http.Transport{Proxy: http.ProxyURL(tormdr.proxy)},
-	}
-	resp, _ = client.Get(ipCheckServer)
-	body, _ = ioutil.ReadAll(resp.Body)
-	fmt.Println(strings.TrimSpace(string(body)))
-
-	tormdr.SetExitNode("185.220.101.8")
-
-	client = &http.Client{
-		Transport: &http.Transport{Proxy: http.ProxyURL(tormdr.proxy)},
-	}
-	resp, _ = client.Get(ipCheckServer)
-	body, _ = ioutil.ReadAll(resp.Body)
-	fmt.Println(strings.TrimSpace(string(body)))
-
-	//_, _ = tormdr.ctrlConn.Write([]byte("signal newnym \n"))
-
-	//ExitNodes=150.129.8.25
 
 	tormdr.Stop()
 }

@@ -11,11 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="pasty dreams">
-      <change afterPath="$PROJECT_DIR$/tormdr/args.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tormdr/control.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tormdr/node.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tormdr/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/tormdr.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tormdr/node.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/microdesc.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tormdr/tormdr.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/tormdr.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,9 +48,18 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="database.sql.templating" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build github.com/hexvalid/midori-go/tormdr">
+    <configuration name="go build github.com/hexvalid/midori-go/tormdr" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="midori-go" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="PACKAGE" />
+      <filePath value="$PROJECT_DIR$/tormdr/tormdr.go" />
+      <package value="github.com/hexvalid/midori-go/tormdr" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="midori-go" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -63,6 +71,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build github.com/hexvalid/midori-go/tormdr" />
         <item itemvalue="Go Build.go build main.go" />
       </list>
     </recent_temporary>
@@ -92,30 +101,35 @@
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
     <state x="555" y="188" width="804" height="677" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594130570260" />
-    <state width="1872" height="356" key="GridCell.Tab.0.bottom" timestamp="1594132183026">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state x="945" y="355" width="660" height="763" key="#go_build_main.go" timestamp="1594141185087">
+      <screen x="0" y="27" width="2560" height="1413" />
+    </state>
+    <state x="945" y="355" width="660" height="763" key="#go_build_main.go/0.27.2560.1413@0.27.2560.1413" timestamp="1594141185087" />
+    <state width="2514" height="383" key="GridCell.Tab.0.bottom" timestamp="1594144979576">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="356" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1594132183026" />
-    <state width="2514" height="502" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1594067881841" />
-    <state width="1872" height="356" key="GridCell.Tab.0.center" timestamp="1594132183025">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="383" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1594144979576" />
+    <state width="2514" height="383" key="GridCell.Tab.0.center" timestamp="1594144979576">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="356" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1594132183025" />
-    <state width="2514" height="502" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1594067881841" />
-    <state width="1872" height="356" key="GridCell.Tab.0.left" timestamp="1594132183024">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="383" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1594144979576" />
+    <state width="2514" height="383" key="GridCell.Tab.0.left" timestamp="1594144979576">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="356" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1594132183024" />
-    <state width="2514" height="502" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1594067881841" />
-    <state width="1872" height="356" key="GridCell.Tab.0.right" timestamp="1594132183025">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="383" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1594144979576" />
+    <state width="2514" height="383" key="GridCell.Tab.0.right" timestamp="1594144979576">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="356" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1594132183025" />
-    <state width="2514" height="502" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1594067881841" />
-    <state x="449" y="161" key="SettingsEditor" timestamp="1594048387295">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state width="2514" height="383" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1594144979576" />
+    <state x="599" y="243" width="1022" height="737" key="SettingsEditor" timestamp="1594141844483">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="449" y="161" key="SettingsEditor/0.0.1920.1051@0.0.1920.1051" timestamp="1594048387295" />
+    <state x="599" y="243" width="1022" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1594141844483" />
     <state x="740" y="379" width="804" height="528" key="Vcs.Push.Dialog.v2" timestamp="1594054671183">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
