@@ -28,17 +28,17 @@ func NewLog(name string, attr color.Attribute) *Logger {
 }
 
 func (logger *Logger) Info(msg string, a ...interface{}) {
-	fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
+	_, _ = fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
 		logger.Color.Sprint(" "+logger.Name+": ")+msg+"\n", a...)
 }
 
 func (logger *Logger) Error(msg string, a ...interface{}) {
-	fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
+	_, _ = fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
 		logger.Color.Sprint(" "+logger.Name+"(")+color.RedString("!")+
 		logger.Color.Sprint("): ")+msg+"\n", a...)
 }
 
 func (logger *Logger) SInfo(smsg, msg string, a ...interface{}) {
-	fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
+	_, _ = fmt.Fprintf(color.Output, color.HiBlackString(time.Now().Format(timeFormat))+
 		logger.Color.Sprint(" "+logger.Name+"(")+smsg+logger.Color.Sprint("): ")+msg+"\n", a...)
 }

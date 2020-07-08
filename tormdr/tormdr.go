@@ -7,8 +7,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/hexvalid/midori-go/logger"
 	"io"
-	"io/ioutil"
-	"net/http"
 	"net/url"
 	"os"
 	"os/exec"
@@ -16,7 +14,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 )
 
@@ -26,9 +23,8 @@ var (
 )
 
 const (
-	goLibVersion     string = "0.3R"
+	goLibVersion     string = "1.0S"
 	localhost        string = "127.0.0.1"
-	ipCheckServer    string = "http://icanhazip.com"
 	socksPortStart   int    = 20000
 	controlPortStart int    = 40000
 )
@@ -112,7 +108,6 @@ func (tormdr *TorMDR) Start() (err error) {
 	}
 
 	//todo: make timeout
-
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.Contains(line, "Bootstrapped") {
@@ -131,21 +126,17 @@ func (tormdr *TorMDR) Start() (err error) {
 		}
 	}
 
-	exitNodeCacheUpdateMutex.Lock()
-	if !exitNodeCachePopulated {
-		log.SInfo("ALL", "Populating Exit Node Cache...")
-		exitNodeCache, err = parseExitNodes(path.Join(tormdr.cacheDir, "cached-microdesc-consensus"))
-		log.SInfo("ALL", "%s Exit Node learned", color.YellowString(strconv.Itoa(len(exitNodeCache))))
-		exitNodeCachePopulated = true
+	if err = populateExitNodeCache(tormdr.cacheDir); err != nil {
+		return err
 	}
-	exitNodeCacheUpdateMutex.Unlock()
 	return nil
 }
 
 func (tormdr *TorMDR) Stop() (err error) {
-	//todo: check leak?
-	//todo: exit over telnet
 	if tormdr.cmd.Process != nil {
+		log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Sending shutdown signal...")
+		_ = tormdr.sendCtrlMsg(controlMsgShutdown)
+		time.Sleep(250 * time.Millisecond)
 		log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Stopping process...")
 		_ = tormdr.cmd.Process.Kill()
 		_, _ = tormdr.cmd.Process.Wait()
@@ -179,26 +170,11 @@ func (tormdr *TorMDR) SetExitNode(ip string) error {
 }
 
 func main() {
-	var wg sync.WaitGroup
-
-	for i := 1; i < 500; i++ {
-		go func() {
-			wg.Add(1)
-			defer wg.Done()
-			x(i)
-		}()
-		time.Sleep(25 * time.Microsecond)
-	}
-
-	wg.Wait()
-}
-
-func x(no int) {
-	tormdr, _ := NewTorMDR(no, &TorMDRConfig{
+	tormdr, _ := NewTorMDR(1, &TorMDRConfig{
 		TorMDRBinaryPath:    "/usr/bin/tormdr",
 		DataDirectory:       "/tmp/tormdr_data",
 		KeepalivePeriod:     60,
-		UseSocks5Proxy:      false,
+		UseSocks5Proxy:      true,
 		Socks5ProxyAddress:  "40.70.243.118:32416",
 		Socks5ProxyUserName: "e4cf6e290c0cf8ae8fb91fcf818e1e40",
 		Socks5ProxyPassword: "a565ab1f3802afbf4d07c1674069d813",
@@ -207,11 +183,20 @@ func x(no int) {
 	if err := tormdr.Start(); err != nil {
 		panic(err)
 	}
-	client := &http.Client{
-		Transport: &http.Transport{Proxy: http.ProxyURL(tormdr.proxy)},
+
+	en, err := FindExitNode(nil, 20000, true, true, true)
+
+	_ = tormdr.SetExitNode(en)
+
+	if err != nil {
+		panic(err)
 	}
-	resp, _ := client.Get(ipCheckServer)
-	body, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(strings.TrimSpace(string(body)))
-	tormdr.Stop()
+
+	fmt.Println(tormdr.TestIP())
+
+	err = tormdr.Stop()
+	if err != nil {
+		panic(err)
+	}
+
 }

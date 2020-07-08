@@ -3,15 +3,19 @@ package main
 import (
 	"bufio"
 	"errors"
+	"github.com/fatih/color"
+	"math/rand"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 var (
-	exitNodeCachePopulated   bool
 	exitNodeCache            []ExitNode
+	exitNodeCachePopulated   bool
 	exitNodeCacheUpdateMutex sync.Mutex
 )
 
@@ -19,7 +23,6 @@ type ExitNode struct {
 	ip        string
 	bandwidth int
 	fast      bool
-	guard     bool
 	stable    bool
 	valid     bool
 }
@@ -60,7 +63,6 @@ func parseExitNodes(path string) (exitNodeList []ExitNode, err error) {
 						ip:        ip,
 						bandwidth: bandwidth,
 						fast:      strings.Contains(lineS, "Fast"),
-						guard:     strings.Contains(lineS, "Guard"),
 						stable:    strings.Contains(lineS, "Stable"),
 						valid:     strings.Contains(lineS, "Valid"),
 					})
@@ -74,4 +76,62 @@ func parseExitNodes(path string) (exitNodeList []ExitNode, err error) {
 		return nil, err
 	}
 	return
+}
+
+func populateExitNodeCache(cacheDir string) (err error) {
+	exitNodeCacheUpdateMutex.Lock()
+	if !exitNodeCachePopulated {
+		log.SInfo("ALL", "Populating Exit Node Cache...")
+		exitNodeCache, err = parseExitNodes(path.Join(cacheDir, "cached-microdesc-consensus"))
+		totalbandwidth := 0
+		for i := 0; i < len(exitNodeCache); i++ {
+			totalbandwidth += exitNodeCache[i].bandwidth
+		}
+		avrbandwidth := totalbandwidth / len(exitNodeCache)
+		log.SInfo("ALL", "%s Exit Node learned. Avarage bandwidth: %s.",
+			color.YellowString(strconv.Itoa(len(exitNodeCache))),
+			color.YellowString(strconv.Itoa(avrbandwidth)))
+		exitNodeCachePopulated = true
+	}
+	exitNodeCacheUpdateMutex.Unlock()
+	return
+}
+
+func FindExitNode(excludedIPs []string, minBandwidth int, fast, stable, valid bool) (string, error) {
+	if exitNodeCachePopulated && len(exitNodeCache) > 1 {
+		cache := make([]ExitNode, len(exitNodeCache))
+		copy(cache, exitNodeCache)
+		rand.Seed(time.Now().UnixNano())
+		rand.Shuffle(len(cache), func(i, j int) { cache[i], cache[j] = cache[j], cache[i] })
+		for i := 0; i < len(cache); i++ {
+			if cache[i].bandwidth >= minBandwidth &&
+				reqOptional(fast, cache[i].fast) &&
+				reqOptional(stable, cache[i].stable) &&
+				reqOptional(valid, cache[i].valid) &&
+				!containsIn(cache[i].ip, excludedIPs) {
+				return cache[i].ip, nil
+			}
+		}
+		return "", errors.New("suitable Exit Node not found")
+	} else {
+		return "", errors.New("cache of Exit Node not populated")
+	}
+}
+
+func reqOptional(req, optional bool) bool {
+	if req {
+		return optional
+	} else {
+		return true
+	}
+}
+func containsIn(ip string, list []string) bool {
+	if list != nil {
+		for i := range list {
+			if list[i] == ip {
+				return true
+			}
+		}
+	}
+	return false
 }

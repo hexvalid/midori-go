@@ -9,9 +9,10 @@ import (
 )
 
 const (
-	controlMsgAuth   = "AUTHENTICATE"
-	controlMsgQuit   = "QUIT"
-	controlMsgNewNym = "SIGNAL NEWNYM"
+	controlMsgAuth     = "AUTHENTICATE"
+	controlMsgQuit     = "QUIT"
+	controlMsgNewNym   = "SIGNAL NEWNYM"
+	controlMsgShutdown = "SIGNAL SHUTDOWN"
 )
 
 func writeCtrlMsg(s string, ctrlConn net.Conn, reader *textproto.Reader) (err error) {
