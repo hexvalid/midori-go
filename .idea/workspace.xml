@@ -10,11 +10,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="update+">
-      <change afterPath="$PROJECT_DIR$/tormdr/http.go" afterDir="false" />
+    <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="update">
+      <change afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logger/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/logger/logger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tormdr/args.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/args.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tormdr/control.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/control.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tormdr/http.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/http.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tormdr/microdesc.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/microdesc.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tormdr/tormdr.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/tormdr.go" afterDir="false" />
     </list>
@@ -53,30 +54,12 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="database.sql.templating" />
   </component>
-  <component name="RunManager" selected="Go Build.go build github.com/hexvalid/midori-go/tormdr">
-    <configuration name="go build github.com/hexvalid/midori-go/tormdr" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="midori-go" />
-      <working_directory value="$PROJECT_DIR$/" />
-      <kind value="PACKAGE" />
-      <filePath value="$PROJECT_DIR$/tormdr/tormdr.go" />
-      <package value="github.com/hexvalid/midori-go/tormdr" />
-      <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Go Build.main">
+    <configuration name="main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
       <module name="midori-go" />
       <working_directory value="$PROJECT_DIR$/" />
       <kind value="FILE" />
-      <filePath value="$PROJECT_DIR$/tormdr/main.go" />
-      <package value="github.com/hexvalid/midori-go" />
-      <directory value="$PROJECT_DIR$/" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build scratch_2.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="midori-go" />
-      <working_directory value="$PROJECT_DIR$/" />
-      <kind value="FILE" />
-      <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch_2.go" />
+      <filePath value="$PROJECT_DIR$/main.go" />
       <package value="github.com/hexvalid/midori-go" />
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
@@ -91,12 +74,14 @@
       <filePath value="$PROJECT_DIR$/tormdr/tormdr_test.go" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Go Build.main" />
+      <item itemvalue="Go Test.tormdr_test.go" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build github.com/hexvalid/midori-go/tormdr" />
-        <item itemvalue="Go Build.go build scratch_2.go" />
+        <item itemvalue="Go Build.main" />
         <item itemvalue="Go Test.tormdr_test.go" />
-        <item itemvalue="Go Build.go build main.go" />
       </list>
     </recent_temporary>
   </component>
@@ -119,51 +104,56 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="pasty dreams" />
     <MESSAGE value="update+" />
-    <option name="LAST_COMMIT_MESSAGE" value="update+" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="555" y="188" width="804" height="677" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594130570260">
+    <state x="555" y="188" width="804" height="677" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594215015546">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state x="555" y="188" width="804" height="677" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594130570260" />
+    <state x="555" y="188" width="804" height="677" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594215015546" />
     <state x="945" y="355" width="660" height="763" key="#go_build_main.go" timestamp="1594141185087">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="945" y="355" width="660" height="763" key="#go_build_main.go/0.27.2560.1413@0.27.2560.1413" timestamp="1594141185087" />
-    <state width="1872" height="347" key="GridCell.Tab.0.bottom" timestamp="1594214453118">
+    <state width="1872" height="347" key="GridCell.Tab.0.bottom" timestamp="1594214994530">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="347" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1594214453118" />
+    <state width="1872" height="347" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1594214994530" />
     <state width="2514" height="725" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1594149118196" />
-    <state width="1872" height="347" key="GridCell.Tab.0.center" timestamp="1594214453117">
+    <state width="1872" height="347" key="GridCell.Tab.0.center" timestamp="1594214994530">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="347" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1594214453117" />
+    <state width="1872" height="347" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1594214994530" />
     <state width="2514" height="725" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1594149118196" />
-    <state width="1872" height="347" key="GridCell.Tab.0.left" timestamp="1594214453117">
+    <state width="1872" height="347" key="GridCell.Tab.0.left" timestamp="1594214994529">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="347" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1594214453117" />
+    <state width="1872" height="347" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1594214994529" />
     <state width="2514" height="725" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1594149118196" />
-    <state width="1872" height="347" key="GridCell.Tab.0.right" timestamp="1594214453118">
+    <state width="1872" height="347" key="GridCell.Tab.0.right" timestamp="1594214994530">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="347" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1594214453118" />
+    <state width="1872" height="347" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1594214994530" />
     <state width="2514" height="725" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1594149118196" />
     <state x="599" y="243" width="1022" height="737" key="SettingsEditor" timestamp="1594141844483">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="449" y="161" key="SettingsEditor/0.0.1920.1051@0.0.1920.1051" timestamp="1594048387295" />
     <state x="599" y="243" width="1022" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1594141844483" />
-    <state x="740" y="379" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1594145379739">
-      <screen x="0" y="27" width="2560" height="1413" />
+    <state x="555" y="262" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1594214543326">
+      <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state x="555" y="262" width="804" height="528" key="Vcs.Push.Dialog.v2/0.0.1920.1051@0.0.1920.1051" timestamp="1594046865807" />
+    <state x="555" y="262" width="804" height="528" key="Vcs.Push.Dialog.v2/0.0.1920.1051@0.0.1920.1051" timestamp="1594214543326" />
     <state x="740" y="379" width="800" height="535" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1594145379739" />
     <state x="98" y="100" width="1724" height="853" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1594101428074">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
     <state x="98" y="100" width="1724" height="853" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594101428074" />
+    <state x="735" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594214533113">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state x="735" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1051@0.0.1920.1051" timestamp="1594214533113" />
     <state x="657" y="265" width="606" height="622" key="find.popup" timestamp="1594214260739">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>

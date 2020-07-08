@@ -1,6 +1,6 @@
-package main
+package tormdr
 
-type TorMDRConfig struct {
+type Config struct {
 	TorMDRBinaryPath    string
 	DataDirectory       string
 	HardwareAccel       bool

@@ -1,4 +1,4 @@
-package main
+package tormdr
 
 import (
 	"bufio"
@@ -41,7 +41,7 @@ type TorMDR struct {
 	cacheDir       string
 }
 
-func NewTorMDR(no int, cfg *TorMDRConfig) (tormdr *TorMDR, err error) {
+func NewTorMDR(no int, cfg *Config) (tormdr *TorMDR, err error) {
 	tormdr = &TorMDR{no: no, cmd: &exec.Cmd{}}
 	tormdr.cmd.Path = cfg.TorMDRBinaryPath
 	tormdr.cmd.Args = append(tormdr.cmd.Args, defaultArgs...)
@@ -167,36 +167,4 @@ func (tormdr *TorMDR) SetExitNode(ip string) error {
 		tormdr.cmd.Args = append(tormdr.cmd.Args, "ExitNodes", ip)
 		return nil
 	}
-}
-
-func main() {
-	tormdr, _ := NewTorMDR(1, &TorMDRConfig{
-		TorMDRBinaryPath:    "/usr/bin/tormdr",
-		DataDirectory:       "/tmp/tormdr_data",
-		KeepalivePeriod:     60,
-		UseSocks5Proxy:      true,
-		Socks5ProxyAddress:  "40.70.243.118:32416",
-		Socks5ProxyUserName: "e4cf6e290c0cf8ae8fb91fcf818e1e40",
-		Socks5ProxyPassword: "a565ab1f3802afbf4d07c1674069d813",
-	})
-
-	if err := tormdr.Start(); err != nil {
-		panic(err)
-	}
-
-	en, err := FindExitNode(nil, 20000, true, true, true)
-
-	_ = tormdr.SetExitNode(en)
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(tormdr.TestIP())
-
-	err = tormdr.Stop()
-	if err != nil {
-		panic(err)
-	}
-
 }
