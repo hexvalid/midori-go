@@ -20,6 +20,7 @@ func (tormdr *TorMDR) TestIP() (ip string, latency int, err error) {
 			Proxy:           http.ProxyURL(tormdr.proxy),
 			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 		},
+		Timeout: 30 * time.Second,
 	}
 
 	var req *http.Request
@@ -34,6 +35,7 @@ func (tormdr *TorMDR) TestIP() (ip string, latency int, err error) {
 	if res, err = client.Do(req); err != nil {
 		return
 	}
+	defer res.Body.Close()
 	latency = int(time.Since(start) / time.Millisecond)
 	if body, err = ioutil.ReadAll(res.Body); err != nil {
 		return

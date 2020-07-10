@@ -1,0 +1,4 @@
+[x] getnada integration
+[ ] database solution
+[ ] ai server handler
+[ ] scan predicted pics

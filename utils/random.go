@@ -32,11 +32,15 @@ func RandomPossibility(n int) bool {
 	return r < n
 }
 
-func GenerateUsername() (username, firstname, lastname string) {
+func GenerateUsername() (username string) {
 	a, b, c := generateStupidName()
-	firstname = a
-	lastname = c
-	if RandomPossibility(40) {
+	//	firstname = a
+	//	lastname = c
+	if RandomPossibility(20) {
+		username = a + b
+	} else if RandomPossibility(20) {
+		username = b + a
+	} else if RandomPossibility(40) {
 		username = a + b + c
 	} else if RandomPossibility(30) {
 		username = a + b + c + strconv.Itoa(RandomInt(1, 99))

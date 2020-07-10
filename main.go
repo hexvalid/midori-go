@@ -1,12 +1,27 @@
 package main
 
 import (
-	"fmt"
-	"github.com/hexvalid/midori-go/tormdr"
+	"github.com/hexvalid/midori-go/getnada"
+	"sync"
+	"time"
 )
 
 func main() {
-	tormdrN, _ := tormdr.NewTorMDR(1, &tormdr.Config{
+	//fmt.Println(getnada.GenerateMail())
+	for {
+		x, _ := getnada.GetInbox("test@getnada.com")
+		var wg sync.WaitGroup
+		for _, mail := range x {
+			wg.Add(1)
+			go func() {
+				mail.Delete()
+				wg.Done()
+			}()
+			time.Sleep(10 * time.Millisecond)
+		}
+		wg.Wait()
+	}
+	/*tormdrN, _ := tormdr.NewTorMDR(1, &tormdr.Config{
 		TorMDRBinaryPath:    "/usr/bin/tormdr",
 		DataDirectory:       "/tmp/tormdr_data",
 		KeepalivePeriod:     60,
@@ -33,5 +48,5 @@ func main() {
 	err = tormdrN.Stop()
 	if err != nil {
 		panic(err)
-	}
+	}*/
 }
