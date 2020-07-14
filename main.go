@@ -1,14 +1,15 @@
 package main
 
-import (
-	"github.com/hexvalid/midori-go/getnada"
-	"sync"
-	"time"
-)
+import "github.com/hexvalid/midori-go/bot"
 
 func main() {
 	//fmt.Println(getnada.GenerateMail())
-	for {
+
+	a, _ := bot.GenerateNewAccount(0)
+	a.OpenBrowser()
+	a.Login(false)
+
+	/*for {
 		x, _ := getnada.GetInbox("test@getnada.com")
 		var wg sync.WaitGroup
 		for _, mail := range x {
@@ -20,7 +21,8 @@ func main() {
 			time.Sleep(10 * time.Millisecond)
 		}
 		wg.Wait()
-	}
+	}*/
+
 	/*tormdrN, _ := tormdr.NewTorMDR(1, &tormdr.Config{
 		TorMDRBinaryPath:    "/usr/bin/tormdr",
 		DataDirectory:       "/tmp/tormdr_data",
@@ -43,7 +45,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(tormdrN.TestIP())
+	fmt.Println(tormdrN.CheckIP())
 
 	err = tormdrN.Stop()
 	if err != nil {

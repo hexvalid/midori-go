@@ -6,16 +6,12 @@ import (
 	"encoding/base32"
 	"encoding/binary"
 	"fmt"
-	"strings"
 	"time"
 )
 
 func GenerateTFA(secret string) (string, error) {
-	secret = strings.ToUpper(secret)
-	secret = strings.Replace(secret, " ", "", -1)
 	key := make([]byte, base32.StdEncoding.DecodedLen(len(secret)))
-	_, err := base32.StdEncoding.Decode(key, []byte(secret))
-	if err != nil {
+	if _, err := base32.StdEncoding.Decode(key, []byte(secret)); err != nil {
 		return "", err
 	}
 	message := make([]byte, 8)

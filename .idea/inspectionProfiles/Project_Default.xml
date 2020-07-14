@@ -15,6 +15,7 @@
         <method importPath="math/rand" receiver="*Rand" name="Read" />
         <method importPath="os" receiver="*File" name="Close" />
         <method importPath="io" receiver="ReadCloser" name="Close" />
+        <method importPath="compress/gzip" receiver="*Reader" name="Close" />
       </methods>
     </inspection_tool>
     <inspection_tool class="GrazieInspection" enabled="false" level="TYPO" enabled_by_default="false" />

@@ -13,13 +13,18 @@ const (
 	BaseBytes         = "0123456789abcdef"
 )
 
-func RandStringBytes(n int, s string) string {
+func RandomStringInRunes(n int, s string) string {
 	rand.Seed(time.Now().UnixNano())
 	b := make([]byte, n)
 	for i := range b {
 		b[i] = s[rand.Intn(len(s))]
 	}
 	return string(b)
+}
+
+func RandomStringInArray(array []string) string {
+	rand.Seed(time.Now().Unix())
+	return array[rand.Intn(len(array))]
 }
 
 func RandomInt(min, max int) int {

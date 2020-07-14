@@ -1,6 +1,8 @@
 package bot
 
 import (
+	"github.com/hexvalid/midori-go/getnada"
+	"github.com/hexvalid/midori-go/utils"
 	"net/http"
 	"net/http/cookiejar"
 	"time"
@@ -15,7 +17,6 @@ type Account struct {
 	RewardPoints int
 	RollCount    int
 	LastFPDate   time.Time
-	LastV3Date   time.Time
 	Stats        string
 	Settings     Settings
 	Browser      Browser
@@ -23,7 +24,7 @@ type Account struct {
 	ReferrerID   int
 	LoginTime    time.Time
 	SignUpTime   time.Time
-	SignUpIP     string
+	Proxy        string
 }
 
 type Settings struct {
@@ -42,4 +43,19 @@ type Browser struct {
 	Fingerprint2   int
 	Jar            *cookiejar.Jar
 	Client         *http.Client
+}
+
+func GenerateNewAccount(referrerID int) (a Account, err error) {
+	log.Info("Generating new account...")
+	if a.Email, err = getnada.GenerateMail(); err != nil {
+		return
+	}
+	a.Password = utils.RandomStringInRunes(utils.RandomInt(8, 16), utils.LetterBytes)
+	a.ReferrerID = referrerID
+	a.Browser.AcceptLanguage = utils.RandomStringInArray(utils.AcceptLanguages)
+	a.Browser.UserAgent = utils.RandomStringInArray(utils.UserAgents)
+	a.Browser.Fingerprint = utils.RandomStringInRunes(32, utils.BaseBytes)
+	a.Browser.Fingerprint2 = utils.RandomInt(1111111111, 9999999999)
+	a.Browser.Jar, _ = cookiejar.New(nil)
+	return
 }

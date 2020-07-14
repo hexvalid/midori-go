@@ -13,7 +13,7 @@ import (
 
 const ipCheckServer string = "http://checkip.amazonaws.com"
 
-func (tormdr *TorMDR) TestIP() (ip string, latency int, err error) {
+func (tormdr *TorMDR) CheckIP() (ip string, latency int, err error) {
 	log.SInfo(fmt.Sprintf("%03d", tormdr.no), "Testing Exit Node...")
 	client := &http.Client{
 		Transport: &http.Transport{
