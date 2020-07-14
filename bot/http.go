@@ -1,23 +1,31 @@
 package bot
 
 import (
+	"bytes"
 	"compress/flate"
 	"compress/gzip"
 	"crypto/tls"
 	"fmt"
+	"github.com/hexvalid/midori-go/tormdr"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/http/cookiejar"
+	"strings"
 )
 
-func (a *Account) OpenBrowser() {
+func (a *Account) OpenBrowser(tormdr *tormdr.TorMDR) {
 	log.SInfo(fmt.Sprintf("%08d", a.ID), "Opening Browser...")
-	a.Browser.Client = &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-		},
-		Jar:     a.Browser.Jar,
-		Timeout: browserTimeout,
+	transport := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+	if tormdr != nil {
+		transport.Proxy = http.ProxyURL(tormdr.Proxy)
+	}
+	a.client = &http.Client{
+		Transport: transport,
+		Jar:       a.jar,
+		Timeout:   browserTimeout,
 	}
 }
 
@@ -43,7 +51,7 @@ func (a *Account) newRequest(method, url string, body io.Reader, xreq bool, refe
 }
 
 func (a *Account) execRequest(req *http.Request) (res string, err error) {
-	rawRes, err := a.Browser.Client.Do(req)
+	rawRes, err := a.client.Do(req)
 	if err != nil {
 		return
 	}
@@ -69,10 +77,50 @@ func (a *Account) execRequest(req *http.Request) (res string, err error) {
 }
 
 func (a *Account) getCookieValue(cookieName string) string {
-	for _, cookie := range a.Browser.Jar.Cookies(uriBase) {
+	for _, cookie := range a.jar.Cookies(uriBase) {
 		if cookie.Name == cookieName {
 			return cookie.Value
 		}
 	}
 	return ""
+}
+
+func (a *Account) addCookie(name, value string) {
+	var cookies []*http.Cookie
+	cookies = append(cookies, &http.Cookie{
+		Name:   name,
+		Value:  value,
+		Path:   "/",
+		Domain: urlSubBase,
+	})
+	a.jar.SetCookies(uriBase, cookies)
+}
+
+func (a *Account) JarToString() string {
+	var buffer bytes.Buffer
+	cookies := a.jar.Cookies(uriBase)
+	for i := 0; i < len(cookies); i++ {
+		buffer.WriteString(cookies[i].Name)
+		buffer.WriteString("=")
+		buffer.WriteString(cookies[i].Value)
+		if i != len(cookies)-1 {
+			buffer.WriteString("; ")
+		}
+	}
+	return buffer.String()
+}
+
+func (a *Account) StringToJar(s string) {
+	a.jar, _ = cookiejar.New(nil)
+	var cookies []*http.Cookie
+	ss := strings.Split(s, "; ")
+	for i := range ss {
+		sscc := strings.Split(ss[i], "=")
+		cookie := &http.Cookie{
+			Name:  sscc[0],
+			Value: sscc[1],
+		}
+		cookies = append(cookies, cookie)
+	}
+	a.jar.SetCookies(uriBase, cookies)
 }

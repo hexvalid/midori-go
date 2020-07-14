@@ -23,7 +23,7 @@ func RandomStringInRunes(n int, s string) string {
 }
 
 func RandomStringInArray(array []string) string {
-	rand.Seed(time.Now().Unix())
+	rand.Seed(time.Now().UnixNano())
 	return array[rand.Intn(len(array))]
 }
 

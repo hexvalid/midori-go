@@ -1,14 +1,41 @@
 package main
 
-import "github.com/hexvalid/midori-go/bot"
+import (
+	"fmt"
+	"github.com/hexvalid/midori-go/bot"
+	"github.com/hexvalid/midori-go/database"
+	"github.com/hexvalid/midori-go/tormdr"
+	"os"
+)
 
 func main() {
 	//fmt.Println(getnada.GenerateMail())
+	db, _ := database.Open("midori-go.db")
+	x, err := database.GetAllAccounts(db)
+	fmt.Println(err)
 
+	x[0].OpenBrowser(nil)
+	x[0].Home()
+
+	os.Exit(1)
 	a, _ := bot.GenerateNewAccount(0)
-	a.OpenBrowser()
-	a.Login(false)
 
+	tormdrN, _ := tormdr.NewTorMDR(1, &tormdr.Config{
+		TorMDRBinaryPath: "/usr/bin/tormdr",
+		DataDirectory:    "/tmp/tormdr_data",
+	})
+
+	if err := tormdrN.Start(); err != nil {
+		panic(err)
+	}
+	tormdrN.Start()
+	a.OpenBrowser(tormdrN)
+
+	fmt.Println(a.Login(true))
+
+	database.InsertAccount(db, &a)
+
+	tormdrN.Stop()
 	/*for {
 		x, _ := getnada.GetInbox("test@getnada.com")
 		var wg sync.WaitGroup
@@ -52,3 +79,8 @@ func main() {
 		panic(err)
 	}*/
 }
+
+/*You have an invalid email address attached to your account. Please change it to one that is valid (by clicking on the PROFILE button in the top bar) so that you can receive important emails from us in the future.
+We recommend signing up to and using Google Mail instead of your current email provider.
+To get specific details about the error, please click here.
+If you think this is a mistake, please click here to validate your email address.*/

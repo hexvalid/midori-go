@@ -18,13 +18,19 @@ const (
 	cookieCsrfToken                 = "csrf_token"
 	headerAccept                    = "Accept"
 	headerContentType               = "Content-Type"
+	headerUserAgent                 = "User-Agent"
+	noUserAgent                     = ""
 	headerContentTypeFormUrlEncoded = "application/x-www-form-urlencoded"
+	parallelCaptcha                 = 4
+	parallelCaptchaDelay            = 100 * time.Millisecond
+	urlAIServerSolve                = "http://40.70.243.118:4200/solve/"
 )
 
 var uriBase = &url.URL{Host: "freebitco.in", Scheme: "https", Path: "/"}
 
 const (
 	urlRoot       = "https://freebitco.in"
+	urlSubBase    = ".freebitco.in"
 	urlBase       = urlRoot + "/"
 	urlSignUpPage = urlRoot + "/?op=signup_page"
 	urlApi        = urlRoot + "/cgi-bin/api.pl"
@@ -32,7 +38,10 @@ const (
 )
 
 var (
-	regexSignupToken    = regexp.MustCompile(`signup_token\s=\s'(.*?)'`)
-	regexBalance        = regexp.MustCompile(`<span id="balance">([0-9.]+)</span>`)
+	regexSignupToken  = regexp.MustCompile(`signup_token\s=\s'(.*?)'`)
+	regexUserID       = regexp.MustCompile(`var userid = ([0-9.]+);`)
+	regexBalance      = regexp.MustCompile(`<span id="balance">([0-9.]+)</span>`)
+	regexRewardPoints = regexp.MustCompile(`user_reward_points\D+>([0-9,]+)</div>`)
+
 	regexDisableLottery = regexp.MustCompile(`id="disable_lottery_checkbox"\s(.*?)\s</div>`)
 )

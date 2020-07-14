@@ -32,7 +32,7 @@ const (
 type TorMDR struct {
 	cmd            *exec.Cmd
 	no             int
-	proxy          *url.URL
+	Proxy          *url.URL
 	bootStatus     string
 	stdoutPipe     io.ReadCloser
 	socksPort      int
@@ -53,7 +53,9 @@ func NewTorMDR(no int, cfg *Config) (tormdr *TorMDR, err error) {
 	tormdr.cmd.Args = append(tormdr.cmd.Args, "ControlPort", strconv.Itoa(tormdr.controlPort))
 	tormdr.cmd.Args = append(tormdr.cmd.Args, "DataDirectory", dataDir)
 	tormdr.cmd.Args = append(tormdr.cmd.Args, "CacheDirectory", tormdr.cacheDir)
-	tormdr.cmd.Args = append(tormdr.cmd.Args, "KeepalivePeriod", strconv.Itoa(cfg.KeepalivePeriod))
+	if cfg.KeepalivePeriod > 0 {
+		tormdr.cmd.Args = append(tormdr.cmd.Args, "KeepalivePeriod", strconv.Itoa(cfg.KeepalivePeriod))
+	}
 	if cfg.HardwareAccel {
 		tormdr.cmd.Args = append(tormdr.cmd.Args, "HardwareAccel", "1")
 	} else {
@@ -67,7 +69,7 @@ func NewTorMDR(no int, cfg *Config) (tormdr *TorMDR, err error) {
 	if err = os.MkdirAll(cfg.DataDirectory, os.ModePerm); err != nil {
 		return nil, err
 	}
-	if tormdr.proxy, err = url.Parse(fmt.Sprintf("socks5://%s:%d",
+	if tormdr.Proxy, err = url.Parse(fmt.Sprintf("socks5://%s:%d",
 		localhost, tormdr.socksPort)); err != nil {
 		return nil, err
 	}

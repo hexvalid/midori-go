@@ -15,7 +15,7 @@ type Account struct {
 	Password     string
 	Balance      float64
 	RewardPoints int
-	RollCount    int
+	FPCount      int
 	LastFPDate   time.Time
 	Stats        string
 	Settings     Settings
@@ -24,25 +24,27 @@ type Account struct {
 	ReferrerID   int
 	LoginTime    time.Time
 	SignUpTime   time.Time
+	Serial       string
 	Proxy        string
+
+	jar    *cookiejar.Jar
+	client *http.Client
 }
 
 type Settings struct {
-	EmailVerified   bool
-	DisableLottery  bool
-	DisableInterest bool
-	EnableTFA       bool
-	TFASecret       string
-	EmailSubs       string
+	EmailVerified   bool   `json:"emailVerified"`
+	DisableLottery  bool   `json:"disableLottery"`
+	DisableInterest bool   `json:"disableInterest"`
+	EnableTFA       bool   `json:"enableTFA"`
+	TFASecret       string `json:"tfaSecret"`
+	EmailSubs       string `json:"emailSubs"`
 }
 
 type Browser struct {
-	AcceptLanguage string
-	UserAgent      string
-	Fingerprint    string
-	Fingerprint2   int
-	Jar            *cookiejar.Jar
-	Client         *http.Client
+	AcceptLanguage string `json:"acceptLanguage"`
+	UserAgent      string `json:"userAgent"`
+	Fingerprint    string `json:"fingerprint"`
+	Fingerprint2   int    `json:"fingerprint2"`
 }
 
 func GenerateNewAccount(referrerID int) (a Account, err error) {
@@ -56,6 +58,6 @@ func GenerateNewAccount(referrerID int) (a Account, err error) {
 	a.Browser.UserAgent = utils.RandomStringInArray(utils.UserAgents)
 	a.Browser.Fingerprint = utils.RandomStringInRunes(32, utils.BaseBytes)
 	a.Browser.Fingerprint2 = utils.RandomInt(1111111111, 9999999999)
-	a.Browser.Jar, _ = cookiejar.New(nil)
+	a.jar, _ = cookiejar.New(nil)
 	return
 }

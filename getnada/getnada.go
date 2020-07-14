@@ -62,7 +62,7 @@ func GenerateMail() (string, error) {
 			return "", err
 		}
 	}
-	rand.Seed(time.Now().Unix())
+	rand.Seed(time.Now().UnixNano())
 	address := fmt.Sprintf("%s@%s", utils.GenerateUsername(), domains[rand.Intn(len(domains))])
 	log.Info("Mail address generated: %s", color.YellowString(address))
 	return address, nil
