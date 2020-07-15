@@ -9,6 +9,8 @@ var AcceptLanguages = []string{
 	"en-US;q=0.8",
 }
 
+var TimeOffsets = []int{-180, -120, -60, 0, 600, 360, 240, 180}
+
 var UserAgents = []string{
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36",
 	"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36",

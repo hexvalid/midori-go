@@ -89,7 +89,7 @@ func GetInbox(address string) (mails []Mail, err error) {
 	return
 }
 
-func (m *Mail) Load() (html string, err error) {
+func (m *Mail) Load() (err error) {
 	log.SInfo(fmt.Sprintf(m.UID[:6]), "Loading mail...")
 	var res *http.Response
 	var body []byte
@@ -103,7 +103,7 @@ func (m *Mail) Load() (html string, err error) {
 	if err = json.Unmarshal(body, m); err != nil {
 		return
 	}
-	return m.HTML, nil
+	return nil
 }
 
 func (m *Mail) Delete() (err error) {

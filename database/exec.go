@@ -10,6 +10,10 @@ import (
 
 func InsertAccount(db *sql.DB, a *bot.Account) error {
 
+	statsJson, err := json.Marshal(&a.Stats)
+	if err != nil {
+		return err
+	}
 	browserJson, err := json.Marshal(&a.Browser)
 	if err != nil {
 		return err
@@ -33,7 +37,7 @@ func InsertAccount(db *sql.DB, a *bot.Account) error {
 		a.RewardPoints,
 		a.FPCount,
 		a.LastFPDate,
-		a.Stats,
+		statsJson,
 		settingsJson,
 		browserJson,
 		a.JarToString(),
@@ -44,7 +48,7 @@ func InsertAccount(db *sql.DB, a *bot.Account) error {
 		a.Serial,
 		a.Proxy)
 	if err == nil {
-		log.Info("Account successfully inserted to database: %d", a.ID)
+		log.Info("Account successfully inserted to database: %s", color.BlueString(strconv.Itoa(a.ID)))
 	}
 	return err
 }
@@ -59,6 +63,7 @@ func GetAllAccounts(db *sql.DB) (accs []*bot.Account, err error) {
 	rows, err := stmt.Query()
 	for rows.Next() {
 
+		var statsString string
 		var settingsString string
 		var browserString string
 		var cookiesString string
@@ -74,7 +79,7 @@ func GetAllAccounts(db *sql.DB) (accs []*bot.Account, err error) {
 			&a.RewardPoints,
 			&a.FPCount,
 			&a.LastFPDate,
-			&a.Stats,
+			&statsString,
 			&settingsString,
 			&browserString,
 			&cookiesString,
@@ -85,6 +90,10 @@ func GetAllAccounts(db *sql.DB) (accs []*bot.Account, err error) {
 			&a.Serial,
 			&a.Proxy,
 		); err != nil {
+			return
+		}
+
+		if err = json.Unmarshal([]byte(statsString), &a.Stats); err != nil {
 			return
 		}
 

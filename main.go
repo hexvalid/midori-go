@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/hexvalid/midori-go/bot"
 	"github.com/hexvalid/midori-go/database"
 	"github.com/hexvalid/midori-go/tormdr"
-	"os"
 )
 
 func main() {
@@ -13,12 +11,6 @@ func main() {
 	db, _ := database.Open("midori-go.db")
 	x, err := database.GetAllAccounts(db)
 	fmt.Println(err)
-
-	x[0].OpenBrowser(nil)
-	x[0].Home()
-
-	os.Exit(1)
-	a, _ := bot.GenerateNewAccount(0)
 
 	tormdrN, _ := tormdr.NewTorMDR(1, &tormdr.Config{
 		TorMDRBinaryPath: "/usr/bin/tormdr",
@@ -29,13 +21,36 @@ func main() {
 		panic(err)
 	}
 	tormdrN.Start()
-	a.OpenBrowser(tormdrN)
 
-	fmt.Println(a.Login(true))
-
-	database.InsertAccount(db, &a)
+	x[3].OpenBrowser(tormdrN)
+	x[3].Home()
+	x[3].Roll()
 
 	tormdrN.Stop()
+
+	/*	a, _ := bot.GenerateNewAccount(0)
+
+		tormdrN, _ := tormdr.NewTorMDR(1, &tormdr.Config{
+			TorMDRBinaryPath: "/usr/bin/tormdr",
+			DataDirectory:    "/tmp/tormdr_data",
+		})
+
+		if err := tormdrN.Start(); err != nil {
+			panic(err)
+		}
+		tormdrN.Start()
+		a.OpenBrowser(tormdrN)
+		fmt.Println(a.Login(true))
+		fmt.Println(a.Home())
+		fmt.Println(a.VerifyEmail())
+		time.Sleep(10 * time.Second)
+		fmt.Println(a.Home())
+		a.Roll()
+
+		database.InsertAccount(db, &a)
+
+		tormdrN.Stop()*/
+
 	/*for {
 		x, _ := getnada.GetInbox("test@getnada.com")
 		var wg sync.WaitGroup

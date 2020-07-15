@@ -2,7 +2,7 @@
 [-] database solution
 [x] ai server handler
 [x] scan predicted pics
-[ ] email validator
-[ ] rolling system
-[ ] fullset homing
-
+[x] email validator
+[-] rolling system
+[x] fullset homing
+[ ] anticaptcha integration

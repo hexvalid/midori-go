@@ -27,6 +27,11 @@ func RandomStringInArray(array []string) string {
 	return array[rand.Intn(len(array))]
 }
 
+func RandomIntInArray(array []int) int {
+	rand.Seed(time.Now().UnixNano())
+	return array[rand.Intn(len(array))]
+}
+
 func RandomInt(min, max int) int {
 	rand.Seed(time.Now().UnixNano())
 	return rand.Intn((max+1)-min) + min

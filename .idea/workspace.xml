@@ -10,22 +10,17 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="getnada integration ok">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/database.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/exec.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/queries.go" afterDir="false" />
+    <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="update">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot/account.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot/account.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot/bot.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot/bot.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot/captcha.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot/captcha.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot/consts.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot/consts.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot/http.go" beforeDir="false" afterPath="$PROJECT_DIR$/bot/http.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/exec.go" beforeDir="false" afterPath="$PROJECT_DIR$/database/exec.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/getnada/getnada.go" beforeDir="false" afterPath="$PROJECT_DIR$/getnada/getnada.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/todo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tormdr/check.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/check.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tormdr/tormdr.go" beforeDir="false" afterPath="$PROJECT_DIR$/tormdr/tormdr.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/browser.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/browser.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/random.go" beforeDir="false" afterPath="$PROJECT_DIR$/utils/random.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +74,15 @@
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
+    <configuration name="go build scratch.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="midori-go" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$APPLICATION_CONFIG_DIR$/scratches/scratch.go" />
+      <package value="github.com/hexvalid/midori-go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
       <module name="midori-go" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -102,10 +106,12 @@
       <item itemvalue="Go Build.go build scratch_3.go" />
       <item itemvalue="Go Build.main" />
       <item itemvalue="Go Test.tormdr_test.go" />
+      <item itemvalue="Go Build.go build scratch.go" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.main" />
+        <item itemvalue="Go Build.go build scratch.go" />
         <item itemvalue="Go Build.go build scratch_3.go" />
         <item itemvalue="Go Test.tormdr_test.go" />
       </list>
@@ -130,9 +136,9 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="pasty dreams" />
     <MESSAGE value="update+" />
-    <MESSAGE value="update" />
     <MESSAGE value="getnada integration ok" />
-    <option name="LAST_COMMIT_MESSAGE" value="getnada integration ok" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="WindowStateProjectService">
     <state x="619" y="313" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594761688788">
@@ -153,40 +159,40 @@
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="802" y="383" width="424" height="551" key="FileChooserDialogImpl/0.27.2560.1413@0.27.2560.1413" timestamp="1594761687020" />
-    <state width="2514" height="454" key="GridCell.Tab.0.bottom" timestamp="1594769158296">
+    <state width="2514" height="395" key="GridCell.Tab.0.bottom" timestamp="1594852013954">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="298" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1594738346728" />
-    <state width="2514" height="454" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1594769158296" />
-    <state width="2514" height="454" key="GridCell.Tab.0.center" timestamp="1594769158296">
+    <state width="2514" height="395" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1594852013954" />
+    <state width="2514" height="395" key="GridCell.Tab.0.center" timestamp="1594852013953">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="298" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1594738346727" />
-    <state width="2514" height="454" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1594769158296" />
-    <state width="2514" height="454" key="GridCell.Tab.0.left" timestamp="1594769158296">
+    <state width="2514" height="395" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1594852013953" />
+    <state width="2514" height="395" key="GridCell.Tab.0.left" timestamp="1594852013953">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="298" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1594738346727" />
-    <state width="2514" height="454" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1594769158296" />
-    <state width="2514" height="454" key="GridCell.Tab.0.right" timestamp="1594769158296">
+    <state width="2514" height="395" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1594852013953" />
+    <state width="2514" height="395" key="GridCell.Tab.0.right" timestamp="1594852013953">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="1872" height="298" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1594738346727" />
-    <state width="2514" height="454" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1594769158296" />
+    <state width="2514" height="395" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1594852013953" />
     <state x="688" y="210" width="537" height="633" key="RollbackChangesDialog" timestamp="1594215022321">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
     <state x="688" y="210" width="537" height="633" key="RollbackChangesDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594215022321" />
-    <state x="1048" y="227" width="1022" height="737" key="SettingsEditor" timestamp="1594741317206">
+    <state x="1048" y="227" width="1022" height="737" key="SettingsEditor" timestamp="1594848512546">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="449" y="161" key="SettingsEditor/0.0.1920.1051@0.0.1920.1051" timestamp="1594048387295" />
-    <state x="1048" y="227" width="1022" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1594741317206" />
-    <state x="555" y="262" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1594391298320">
-      <screen x="0" y="0" width="1920" height="1051" />
+    <state x="1048" y="227" width="1022" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1594848512546" />
+    <state x="740" y="379" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1594770016305">
+      <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="555" y="262" width="804" height="528" key="Vcs.Push.Dialog.v2/0.0.1920.1051@0.0.1920.1051" timestamp="1594391298320" />
-    <state x="740" y="379" width="800" height="535" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1594145379739" />
+    <state x="740" y="379" width="800" height="535" key="Vcs.Push.Dialog.v2/0.27.2560.1413@0.27.2560.1413" timestamp="1594770016305" />
     <state x="1104" y="612" width="362" height="270" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1594764704491">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
@@ -196,24 +202,24 @@
     </state>
     <state x="98" y="100" width="1724" height="853" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594101428074" />
     <state x="131" y="161" width="2299" height="1147" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.27.2560.1413@0.27.2560.1413" timestamp="1594743985049" />
-    <state x="754" y="313" width="1042" height="848" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1594758953131">
+    <state x="754" y="313" width="1042" height="848" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1594811386618">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
-    <state x="754" y="313" width="1042" height="848" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.2560.1413@0.27.2560.1413" timestamp="1594758953131" />
+    <state x="754" y="313" width="1042" height="848" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.27.2560.1413@0.27.2560.1413" timestamp="1594811386618" />
     <state x="735" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1594214533113">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
     <state x="735" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1051@0.0.1920.1051" timestamp="1594214533113" />
-    <state x="876" y="383" width="808" height="837" key="find.popup" timestamp="1594765629319">
+    <state x="758" y="128" width="1189" height="1017" key="find.popup" timestamp="1594850205521">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="657" y="265" width="606" height="622" key="find.popup/0.0.1920.1051@0.0.1920.1051" timestamp="1594738209731" />
-    <state x="876" y="383" width="808" height="837" key="find.popup/0.27.2560.1413@0.27.2560.1413" timestamp="1594765629319" />
-    <state width="1183" height="763" key="javadoc.popup.new" timestamp="1594767152020">
+    <state x="758" y="128" width="1189" height="1017" key="find.popup/0.27.2560.1413@0.27.2560.1413" timestamp="1594850205521" />
+    <state width="1183" height="763" key="javadoc.popup.new" timestamp="1594850235961">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state width="448" height="435" key="javadoc.popup.new/0.0.1920.1051@0.0.1920.1051" timestamp="1594738245312" />
-    <state width="1183" height="763" key="javadoc.popup.new/0.27.2560.1413@0.27.2560.1413" timestamp="1594767152020" />
+    <state width="1183" height="763" key="javadoc.popup.new/0.27.2560.1413@0.27.2560.1413" timestamp="1594850235961" />
     <state x="831" y="339" width="896" height="912" key="search.everywhere.popup" timestamp="1594759008559">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
