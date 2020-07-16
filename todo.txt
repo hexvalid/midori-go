@@ -6,3 +6,8 @@
 [-] rolling system
 [x] fullset homing
 [ ] anticaptcha integration
+
+
+
+[ ] total cost calculator via anticaptcha
+

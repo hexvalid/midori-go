@@ -5,6 +5,7 @@ import (
 	"compress/flate"
 	"compress/gzip"
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"github.com/hexvalid/midori-go/tormdr"
 	"io"
@@ -14,19 +15,56 @@ import (
 	"strings"
 )
 
-func (a *Account) OpenBrowser(tormdr *tormdr.TorMDR) {
+const ipCheckServer string = "http://checkip.amazonaws.com"
+
+func (a *Account) OpenBrowser(tormdr *tormdr.TorMDR) error {
 	log.SInfo(fmt.Sprintf("%08d", a.ID), "Opening Browser...")
 	transport := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
-	if tormdr != nil {
-		transport.Proxy = http.ProxyURL(tormdr.Proxy)
+
+	if a.Proxy.Enabled {
+		if a.Proxy.CurrentProxy.Type == ProxyTypeTor {
+			if tormdr == nil {
+				return errors.New("tormdr is not attached")
+			}
+			if err := tormdr.SetExitNode(a.Proxy.CurrentProxy.Address); err != nil {
+				return err
+			}
+
+			ip1, _, err := tormdr.CheckIP()
+			if err != nil {
+				return err
+			}
+
+			transport.Proxy = http.ProxyURL(tormdr.Proxy)
+
+			//todo: dublicated
+			a.client = &http.Client{
+				Transport: transport,
+				Jar:       a.jar,
+				Timeout:   browserTimeout,
+			}
+
+			ip2, _, err := a.checkIP()
+			if err != nil {
+				return err
+			}
+
+			if !(a.Proxy.CurrentProxy.Address == ip2 && ip1 == ip2) {
+				return errors.New("ip address mismatched")
+			}
+
+		}
+	} else {
+		a.client = &http.Client{
+			Transport: transport,
+			Jar:       a.jar,
+			Timeout:   browserTimeout,
+		}
 	}
-	a.client = &http.Client{
-		Transport: transport,
-		Jar:       a.jar,
-		Timeout:   browserTimeout,
-	}
+
+	return nil
 }
 
 func (a *Account) newRequest(method, url string, body io.Reader, xreq bool, referer string) (req *http.Request) {

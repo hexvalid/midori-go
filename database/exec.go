@@ -22,6 +22,10 @@ func InsertAccount(db *sql.DB, a *bot.Account) error {
 	if err != nil {
 		return err
 	}
+	proxyJson, err := json.Marshal(&a.Proxy)
+	if err != nil {
+		return err
+	}
 
 	stmt, err := db.Prepare(insertAccountQuery)
 	if err != nil {
@@ -41,12 +45,12 @@ func InsertAccount(db *sql.DB, a *bot.Account) error {
 		settingsJson,
 		browserJson,
 		a.JarToString(),
-		"",
+		"", //todo: activeBoosts
 		a.ReferrerID,
 		a.LoginTime,
 		a.SignUpTime,
 		a.Serial,
-		a.Proxy)
+		proxyJson)
 	if err == nil {
 		log.Info("Account successfully inserted to database: %s", color.BlueString(strconv.Itoa(a.ID)))
 	}
@@ -68,6 +72,7 @@ func GetAllAccounts(db *sql.DB) (accs []*bot.Account, err error) {
 		var browserString string
 		var cookiesString string
 		var activeBoostsString string
+		var proxyString string
 
 		a := bot.Account{}
 		if err = rows.Scan(
@@ -88,7 +93,7 @@ func GetAllAccounts(db *sql.DB) (accs []*bot.Account, err error) {
 			&a.LoginTime,
 			&a.SignUpTime,
 			&a.Serial,
-			&a.Proxy,
+			&proxyString,
 		); err != nil {
 			return
 		}
@@ -105,10 +110,43 @@ func GetAllAccounts(db *sql.DB) (accs []*bot.Account, err error) {
 			return
 		}
 
+		if err = json.Unmarshal([]byte(proxyString), &a.Proxy); err != nil {
+			return
+		}
+
 		a.StringToJar(cookiesString)
 
 		accs = append(accs, &a)
 	}
 	log.Info("%s account loaded from database", color.YellowString(strconv.Itoa(len(accs))))
 	return accs, err
+}
+
+func UpdateAccountAfterRoll(db *sql.DB, a *bot.Account) error {
+	stmt, err := db.Prepare(updateAccountAfterRollQuery)
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	statsJson, err := json.Marshal(&a.Stats)
+	if err != nil {
+		return err
+	}
+	settingsJson, err := json.Marshal(&a.Settings)
+	if err != nil {
+		return err
+	}
+	proxyJson, err := json.Marshal(&a.Proxy)
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(a.Balance, a.RewardPoints, a.FPCount, a.LastFPDate, statsJson, settingsJson, a.JarToString(),
+		"", proxyJson, //todo: activeBoosts
+		a.ID)
+	if err == nil {
+		log.Info("Account updated on database: %s", color.BlueString(strconv.Itoa(a.ID)))
+	}
+	return err
 }

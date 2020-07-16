@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/hexvalid/midori-go/anticaptcha"
 	"github.com/hexvalid/midori-go/getnada"
 	"github.com/hexvalid/midori-go/logger"
 	"github.com/hexvalid/midori-go/utils"
@@ -87,7 +88,10 @@ func (a *Account) Login(signUp bool) error {
 func (a *Account) Home() error {
 	log.SInfo(fmt.Sprintf("%08d", a.ID), "Loading home...")
 	req := a.newRequest(methodGet, urlBase, nil, false, urlBase)
-	res, _ := a.execRequest(req)
+	res, err := a.execRequest(req)
+	if err != nil {
+		return err
+	}
 
 	if strconv.Itoa(a.ID) != regexUserID.FindStringSubmatch(res)[1] {
 		return errors.New("unable verify user id at home")
@@ -95,7 +99,8 @@ func (a *Account) Home() error {
 
 	if strings.Contains(res, "invalid email address attached") {
 		log.SInfo(fmt.Sprintf("%08d", a.ID), "%s %s", color.YellowString("(Warning)"),
-			color.RedString("Invalid email address")+" error in homepage! Might cause a problem!")
+			color.RedString("Invalid email address")+" error in homepage! Trying fixing...")
+		a.VerifyEmailLinks()
 		//todo: check email verification subsystem and do required thing! to best!
 	}
 
@@ -161,14 +166,31 @@ func (a *Account) Home() error {
 
 func (a *Account) Roll() error {
 	form := url.Values{}
-
-	if a.fpData.captchaType == 1 {
+	if a.fpData.captchaType == 0 {
 		log.SInfo(fmt.Sprintf("%08d", a.ID), "Rolling without captcha...")
 		form.Add("pwc", "1")
-	} else if a.fpData.captchaType == 11 {
+	} else if a.fpData.captchaType == 11 || a.fpData.captchaType == 1 {
 		log.SInfo(fmt.Sprintf("%08d", a.ID), "Rolling with captcha...")
 		form.Add("pwc", "0")
 		form.Add("g_recaptcha_response", "")
+
+		if a.fpData.captchaType == 1 {
+			for i := 0; i < 3; i++ {
+				score, err := a.recordReCaptchaV3()
+				log.SInfo(fmt.Sprintf("%08d", a.ID), "%s: %s",
+					"reCAPTCHA V3 token score", color.YellowString(fmt.Sprintf("%.2f", score)))
+				a.Settings.RecordRecaptchaV3LastScore = score
+				if err != nil || score == 1 || score < 0.35 {
+					log.SInfo(fmt.Sprintf("%08d", a.ID), "%s %s", color.YellowString("(Warning)"),
+						"reCAPTCHA V3 token is not satisfied. Waiting 60 seconds...")
+					time.Sleep(60 * time.Second)
+				} else {
+					break
+				}
+
+			}
+		}
+
 		var wg sync.WaitGroup
 		wg.Add(2)
 		go func() {
@@ -177,7 +199,6 @@ func (a *Account) Roll() error {
 			form.Add("botdetect_random", captchaRandom)
 			form.Add("botdetect_response", captchaResponse)
 		}()
-
 		go func() {
 			defer wg.Done()
 			captchaRandom, captchaResponse, _ := a.solveCaptcha()
@@ -198,7 +219,31 @@ func (a *Account) Roll() error {
 	req := a.newRequest(methodPost, urlBase, strings.NewReader(form.Encode()), true, urlHomePage)
 	req.Header.Add(headerContentType, headerContentTypeFormUrlEncoded)
 
-	fmt.Println(a.execRequest(req))
+	res, err := a.execRequest(req)
+	if err != nil {
+		return err
+	}
+
+	if res[0] == 's' {
+		body := strings.Split(strings.ReplaceAll(res, "::", ":0:"), ":")
+		//s:9931:0.00000243:0.00000221:1594892561:0:9a2b577f4e830417929c8e01372de91dd3b64d4dee2a2dc7420b2c22a6225b81:obD6WZE01R5gHsoM:2:7773ac77fd0ba708f43ba38b4b7d41e3269d263ae12b9cfbae978b2efbb6726c:19cf8592145a5a0fb8630b570d3011a226feed1812ec11e8fd89aa98398c549b:obD6WZE01R5gHsoM:1:4:7:2:8:0.00000000:0.0001
+
+		//todo: add half of body[3] to master account
+		a.Balance, _ = strconv.ParseFloat(body[2], 64)
+		a.RewardPoints, _ = strconv.Atoi(body[14])
+		a.LastFPDate = time.Now()
+		a.addCookie("last_play", body[4])
+		a.FPCount++
+
+		log.SInfo(fmt.Sprintf("%08d", a.ID), "Rolled: %s, earned %s BTC, %s RP, %s lottery tickets.",
+			color.BlueString(body[1]), color.GreenString(body[3]),
+			color.YellowString(body[16]), color.YellowString(body[15]))
+
+	} else if res[0] == 'e' {
+		return errors.New(res)
+	} else {
+		return fmt.Errorf("unknown response: %s", res)
+	}
 
 	return nil
 }
@@ -267,6 +312,29 @@ func (a *Account) getFPToken() error {
 	}
 	a.fpData.fpToken = res
 	return nil
+}
+
+func (a *Account) recordReCaptchaV3() (float64, error) {
+	//token, err := anticaptcha.SendRecaptcha(urlBase, recaptchaV3Key, "all")
+
+	token, err := anticaptcha.SolveRecaptchaV3(urlBase, recaptchaV3Key, "all")
+	if err != nil {
+		return 0, err
+	}
+	log.SInfo(fmt.Sprintf("%08d", a.ID), "Recording reCAPTCHA v3...")
+	a.Settings.RecordRecaptchaV3Count++
+	req := a.newRequest(methodGet, urlApi, nil, true, urlBase)
+	q := req.URL.Query()
+	q.Add("op", "record_recaptcha_v3")
+	q.Add("token", token)
+	q.Add("csrf_token", a.getCookieValue(cookieCsrfToken))
+	req.URL.RawQuery = q.Encode()
+	res, err := a.execRequest(req)
+	if err != nil {
+		return 0, err
+	}
+	a.Settings.RecordRecaptchaV3LastDate = time.Now()
+	return strconv.ParseFloat(res, 64)
 }
 
 func (a *Account) VerifyEmail() error {

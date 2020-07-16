@@ -27,6 +27,7 @@ const (
 	emailVerificationMaxCheckCount  = 6
 	emailVerificationWaitInterval   = 10 * time.Second
 	emailVerificationWaitInitial    = 5 * time.Second
+	recaptchaV3Key                  = "6Lc1kXIUAAAAAPP7OeuycKWZ-t4br4Rh3XvqWUGd"
 )
 
 var uriBase = &url.URL{Host: "freebitco.in", Scheme: "https", Path: "/"}

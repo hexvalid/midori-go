@@ -25,7 +25,7 @@ type Account struct {
 	LoginTime    time.Time
 	SignUpTime   time.Time
 	Serial       string
-	Proxy        string
+	Proxy        ProxyConfig
 
 	jar    *cookiejar.Jar
 	client *http.Client
@@ -44,6 +44,9 @@ type Settings struct {
 	EmailVerificationTime        time.Time `json:"emailVerificationTime"`
 	EmailVerificationLink1       string    `json:"emailVerificationLink1"`
 	EmailVerificationLink2       string    `json:"emailVerificationLink2"`
+	RecordRecaptchaV3Count       int       `json:"recordRecaptchaV3Count"`
+	RecordRecaptchaV3LastDate    time.Time `json:"recordRecaptchaV3LastDate"`
+	RecordRecaptchaV3LastScore   float64   `json:"recordRecaptchaV3LastScore"`
 }
 
 type Browser struct {
@@ -91,9 +94,9 @@ type UserStatsInitial struct {
 type UserStats struct {
 	LotteryTickets string `json:"lottery_tickets"`
 	UserExtras     struct {
-		LotterySpent              string `json:"lottery_spent"`
-		MultiplyCommissionsEarned int    `json:"multiply_commissions_earned,omitempty"`
-		JackpotSpent              string `json:"jackpot_spent"`
+		LotterySpent string `json:"lottery_spent"`
+		//MultiplyCommissionsEarned int    `json:"multiply_commissions_earned,omitempty"`
+		JackpotSpent string `json:"jackpot_spent"`
 	} `json:"user_extras"`
 	User struct {
 		FreeWinnings int `json:"free_winnings"`
