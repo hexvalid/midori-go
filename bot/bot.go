@@ -182,8 +182,8 @@ func (a *Account) Roll() error {
 				a.Settings.RecordRecaptchaV3LastScore = score
 				if err != nil || score == 1 || score < 0.35 {
 					log.SInfo(fmt.Sprintf("%08d", a.ID), "%s %s", color.YellowString("(Warning)"),
-						"reCAPTCHA V3 token is not satisfied. Waiting 60 seconds...")
-					time.Sleep(60 * time.Second)
+						"reCAPTCHA V3 token is not satisfied. Waiting 5 seconds...")
+					time.Sleep(5 * time.Second)
 				} else {
 					break
 				}
@@ -240,6 +240,12 @@ func (a *Account) Roll() error {
 			color.YellowString(body[16]), color.YellowString(body[15]))
 
 	} else if res[0] == 'e' {
+		if strings.Contains(res, "already played from this IP") {
+			ipUnlockTime, _ := strconv.Atoi(strings.Split(res, ":")[2])
+			log.SInfo(fmt.Sprintf("%08d", a.ID), "Adding delay due IP played: %d seconds...", ipUnlockTime)
+			a.LastFPDate = time.Now().Add(time.Duration(ipUnlockTime) * time.Second)
+		}
+
 		return errors.New(res)
 	} else {
 		return fmt.Errorf("unknown response: %s", res)

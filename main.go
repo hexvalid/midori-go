@@ -28,25 +28,25 @@ func main() {
 	}
 
 	x, _ := database.GetAllAccounts(db)
-	a := x[6]
+	a := x[2]
 	fmt.Println(a.OpenBrowser(tormdrN))
 	fmt.Println(a.Home())
 	fmt.Println(a.Roll())
 	//e:Someone has already played from this IP in the last hour. You need to wait for 17 minutes before playing the FREE BTC game again:990:e1
 	fmt.Println(database.UpdateAccountAfterRoll(db, a))
-
-	/*var usedIP []string
-	for i := 0; i < 5; i++ {
-		a, _ := bot.GenerateNewAccount(38427414)
-		a.PlugNewTorAddress(usedIP)
-		a.OpenBrowser(tormdrN)
-		fmt.Println(a.Login(true))
-		fmt.Println(a.Home())
-		fmt.Println(a.VerifyEmail())
-		fmt.Println(a.Roll())
-		database.InsertAccount(db, &a)
-		database.UpdateAccountAfterRoll(db, &a)
-	}*/
+	/*
+		var usedIP []string
+		for i := 0; i < 5; i++ {
+			a, _ := bot.GenerateNewAccount(38240992)
+			a.PlugNewTorAddress(usedIP)
+			a.OpenBrowser(tormdrN)
+			fmt.Println(a.Login(true))
+			fmt.Println(a.Home())
+			fmt.Println(a.VerifyEmail())
+			fmt.Println(a.Roll())
+			database.InsertAccount(db, &a)
+			database.UpdateAccountAfterRoll(db, &a)
+		}*/
 
 	tormdrN.Stop()
 

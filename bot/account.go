@@ -80,13 +80,13 @@ type UserStatsInitial struct {
 		ReferralCommissionsEarned string `json:"referral_commissions_earned"`
 		GrossBalance              string `json:"gross_balance"`
 		LotterySpent              string `json:"lottery_spent"`
-		FreeSpinsPlayed           int    `json:"free_spins_played"`
-		JackpotWinnings           string `json:"jackpot_winnings"`
-		TotalPayouts              int    `json:"total_payouts"`
-		JackpotSpent              string `json:"jackpot_spent"`
-		PaidWinnings              string `json:"paid_winnings"`
-		FreeWinnings              string `json:"free_winnings"`
-		PaidSpinsPlayed           int    `json:"paid_spins_played"`
+		//FreeSpinsPlayed           int    `json:"free_spins_played"`
+		JackpotWinnings string `json:"jackpot_winnings"`
+		TotalPayouts    int    `json:"total_payouts"`
+		JackpotSpent    string `json:"jackpot_spent"`
+		PaidWinnings    string `json:"paid_winnings"`
+		FreeWinnings    string `json:"free_winnings"`
+		PaidSpinsPlayed int    `json:"paid_spins_played"`
 		//TotalDeposits           interface{} `json:"total_deposits"`
 	} `json:"user"`
 }
