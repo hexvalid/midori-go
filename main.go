@@ -7,24 +7,46 @@ import (
 )
 
 func main() {
+
 	//fmt.Println(getnada.GenerateMail())
+
 	db, _ := database.Open("midori-go.db")
-	x, err := database.GetAllAccounts(db)
-	fmt.Println(err)
+	//x, err := database.GetAllAccounts(db)
+	//fmt.Println(err)
 
 	tormdrN, _ := tormdr.NewTorMDR(1, &tormdr.Config{
-		TorMDRBinaryPath: "/usr/bin/tormdr",
-		DataDirectory:    "/tmp/tormdr_data",
+		TorMDRBinaryPath:    "/usr/bin/tormdr",
+		DataDirectory:       "/tmp/tormdr_data",
+		UseSocks5Proxy:      true,
+		Socks5ProxyAddress:  "40.70.243.118:32416",
+		Socks5ProxyUserName: "e4cf6e290c0cf8ae8fb91fcf818e1e40",
+		Socks5ProxyPassword: "a565ab1f3802afbf4d07c1674069d813",
 	})
 
 	if err := tormdrN.Start(); err != nil {
 		panic(err)
 	}
-	tormdrN.Start()
 
-	x[3].OpenBrowser(tormdrN)
-	x[3].Home()
-	x[3].Roll()
+	x, _ := database.GetAllAccounts(db)
+	a := x[7]
+	fmt.Println(a.OpenBrowser(tormdrN))
+	fmt.Println(a.Home())
+	fmt.Println(a.Roll())
+	//e:Someone has already played from this IP in the last hour. You need to wait for 17 minutes before playing the FREE BTC game again:990:e1
+	fmt.Println(database.UpdateAccountAfterRoll(db, a))
+	/*
+		var usedIP []string
+		for i := 0; i < 5; i++ {
+			a, _ := bot.GenerateNewAccount(38240992)
+			a.PlugNewTorAddress(usedIP)
+			a.OpenBrowser(tormdrN)
+			fmt.Println(a.Login(true))
+			fmt.Println(a.Home())
+			fmt.Println(a.VerifyEmail())
+			fmt.Println(a.Roll())
+			database.InsertAccount(db, &a)
+			database.UpdateAccountAfterRoll(db, &a)
+		}*/
 
 	tormdrN.Stop()
 
@@ -87,7 +109,7 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(tormdrN.CheckIP())
+	fmt.Println(tormdrN.checkIP())
 
 	err = tormdrN.Stop()
 	if err != nil {
