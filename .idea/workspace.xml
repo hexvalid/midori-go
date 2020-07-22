@@ -104,9 +104,9 @@
     </configuration>
     <list>
       <item itemvalue="Go Build.go build scratch_3.go" />
+      <item itemvalue="Go Build.go build scratch.go" />
       <item itemvalue="Go Build.main" />
       <item itemvalue="Go Test.tormdr_test.go" />
-      <item itemvalue="Go Build.go build scratch.go" />
     </list>
     <recent_temporary>
       <list>
