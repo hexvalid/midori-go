@@ -28,7 +28,7 @@ func main() {
 	}
 
 	x, _ := database.GetAllAccounts(db)
-	a := x[2]
+	a := x[7]
 	fmt.Println(a.OpenBrowser(tormdrN))
 	fmt.Println(a.Home())
 	fmt.Println(a.Roll())

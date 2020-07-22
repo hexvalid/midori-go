@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{template "libs_head.tmpl"}}
+    <title>Login | midori-go</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">midori-<b>go</b></div>
+    <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start session</p>
+        <form method="post">
+            <div class="form-group has-feedback">
+                <input name="username" type="text" class="form-control" placeholder="Username">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="password" type="password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="6LcIqLQZAAAAAOm0o2qu6XMVypxU5ZRDu9CNtiQB"></div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            </div>
+        </form>
+    </div>
+</div>
+{{template "libs_footer.tmpl"}}
+</body>
+</html>
