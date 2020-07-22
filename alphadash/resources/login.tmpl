@@ -10,6 +10,9 @@
     <div class="login-logo">midori-<b>go</b></div>
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start session</p>
+        {{if .error}}
+            <div class="alert alert-danger">{{.errorMessage}}</div>
+        {{end}}
         <form method="post">
             <div class="form-group has-feedback">
                 <input name="username" type="text" class="form-control" placeholder="Username">
@@ -22,10 +25,10 @@
             <div class="form-group">
                 <div class="g-recaptcha" data-sitekey="6LcIqLQZAAAAAOm0o2qu6XMVypxU5ZRDu9CNtiQB"></div>
             </div>
-
             <div class="text-center">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
             </div>
+
         </form>
     </div>
 </div>
