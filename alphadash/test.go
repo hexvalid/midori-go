@@ -25,6 +25,15 @@ func main() {
 	r.Static("/static", "alphadash/resources/static")
 	r.StaticFile("/favicon.ico", "alphadash/resources/static/img/favicon.ico")
 
+	r.GET("/", func(c *gin.Context) {
+		if !checkValidLogin(c) {
+			c.Redirect(http.StatusFound, "/login")
+		} else {
+			c.Redirect(http.StatusFound, "/dashboard")
+		}
+	})
+	//http://localhost:8080/static/css/AdminLTE.css
+	//http://localhost:8080/dashboard/static/css/AdminLTE.css
 	r.GET("/login", func(c *gin.Context) {
 		if !checkValidLogin(c) {
 			c.HTML(http.StatusOK, "login.tmpl", gin.H{"error": false})
