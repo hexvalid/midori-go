@@ -12,5 +12,7 @@
     <orderEntry type="library" name="twitter-bootstrap" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="api" level="application" />
+    <orderEntry type="library" name="jQuery-slimScroll" level="application" />
+    <orderEntry type="library" name="fastclick" level="application" />
   </component>
 </module>

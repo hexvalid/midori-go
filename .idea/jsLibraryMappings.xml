@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{api, bootstrap, font-awesome, iCheck, ionicons, jquery, jquery-3.5.1, twitter-bootstrap}" />
+    <file url="PROJECT" libraries="{api, bootstrap, fastclick, font-awesome, iCheck, ionicons, jQuery-slimScroll, jquery, jquery-3.5.1, twitter-bootstrap}" />
   </component>
 </project>

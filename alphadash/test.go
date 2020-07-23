@@ -70,17 +70,21 @@ func main() {
 
 	dashboard := r.Group("/dashboard")
 
-	dashboard.Use(AuthRequired())
+	dashboard.Use(authRequired())
 	{
 		dashboard.GET("/", func(c *gin.Context) {
-			c.HTML(http.StatusOK, "dashboard.tmpl", gin.H{"msg": "logged in"})
+			c.HTML(http.StatusOK, "dashboard.tmpl", gin.H{
+				"title":   "Dash",
+				"menu1":   true,
+				"version": "dev-preview",
+			})
 		})
 	}
 
 	r.Run(":8080")
 }
 
-func AuthRequired() gin.HandlerFunc {
+func authRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if !checkValidLogin(c) {
 			c.Redirect(http.StatusFound, "/login")
