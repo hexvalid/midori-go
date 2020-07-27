@@ -18,7 +18,7 @@ func main() {
 	r.Use(sessions.Sessions("midori-auth", store))
 	r.LoadHTMLFiles(
 		"alphadash/resources/login.tmpl",
-		"alphadash/resources/dashboard.tmpl",
+		"alphadash/resources/dashboard_base.tmpl",
 		"alphadash/resources/libs_head.tmpl",
 		"alphadash/resources/libs_footer.tmpl")
 
@@ -73,10 +73,11 @@ func main() {
 	dashboard.Use(authRequired())
 	{
 		dashboard.GET("/", func(c *gin.Context) {
-			c.HTML(http.StatusOK, "dashboard.tmpl", gin.H{
-				"title":   "Dash",
-				"menu1":   true,
-				"version": "dev-preview",
+			c.HTML(http.StatusOK, "dashboard_base.tmpl", gin.H{
+				"title":    "Dash",
+				"subtitle": "Main dash page template",
+				"menu1":    true,
+				"version":  "dev-preview",
 			})
 		})
 	}

@@ -11,16 +11,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4c4d890-1d89-47d0-912b-34093439a404" name="Default Changelist" comment="update">
-      <change afterPath="$PROJECT_DIR$/alphadash/resources/static/css/skin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/alphadash/resources/static/js/adminlte.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/midori-go.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/midori-go.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alphadash/resources/dashboard.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/alphadash/resources/dashboard.tmpl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alphadash/resources/dashboard.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/alphadash/resources/dashboard_base.tmpl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alphadash/resources/libs_footer.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/alphadash/resources/libs_footer.tmpl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alphadash/resources/libs_head.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/alphadash/resources/libs_head.tmpl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alphadash/resources/login.tmpl" beforeDir="false" afterPath="$PROJECT_DIR$/alphadash/resources/login.tmpl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alphadash/resources/static/css/AdminLTE.css" beforeDir="false" afterPath="$PROJECT_DIR$/alphadash/resources/static/css/AdminLTE.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/alphadash/test.go" beforeDir="false" afterPath="$PROJECT_DIR$/alphadash/test.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,8 +28,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Go File" />
         <option value="Go Application" />
+        <option value="Go File" />
       </list>
     </option>
   </component>
@@ -54,11 +51,14 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="go" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="true" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/alphadash/resources/static/css" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
+    <property name="settings.editor.selected.configurable" value="com.goide.configuration.GoProjectSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -75,7 +75,7 @@
       <recent name="$PROJECT_DIR$/alphadash/resources/static" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build scratch_6.go">
+  <component name="RunManager" selected="Go Build.go build github.com/hexvalid/midori-go/alphadash">
     <configuration name="go build github.com/hexvalid/midori-go/alfadash" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="midori-go" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -122,11 +122,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Go Build.main" />
       <item itemvalue="Go Build.go build github.com/hexvalid/midori-go/alfadash" />
-      <item itemvalue="Go Build.go build test.go" />
       <item itemvalue="Go Build.go build github.com/hexvalid/midori-go/alphadash" />
       <item itemvalue="Go Build.go build scratch_6.go" />
+      <item itemvalue="Go Build.go build test.go" />
+      <item itemvalue="Go Build.main" />
     </list>
     <recent_temporary>
       <list>
@@ -168,6 +168,10 @@
     </state>
     <state x="555" y="188" width="804" height="677" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594892194160" />
     <state x="619" y="313" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.2560.1413@0.27.2560.1413" timestamp="1594761688788" />
+    <state x="290" y="213" width="1054" height="789" key="#com.intellij.featureStatistics.actions.ShowFeatureUsageStatisticsDialog" timestamp="1595839962983">
+      <screen x="0" y="0" width="1920" height="1051" />
+    </state>
+    <state x="290" y="213" width="1054" height="789" key="#com.intellij.featureStatistics.actions.ShowFeatureUsageStatisticsDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1595839962983" />
     <state x="871" y="468" width="601" height="396" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1595436879221">
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
@@ -186,38 +190,39 @@
       <screen x="0" y="27" width="2560" height="1413" />
     </state>
     <state x="100" y="127" width="2360" height="1213" key="DiffContextDialog/0.27.2560.1413@0.27.2560.1413" timestamp="1595435081018" />
-    <state x="802" y="383" width="424" height="551" key="FileChooserDialogImpl" timestamp="1595440684565">
-      <screen x="0" y="27" width="2560" height="1413" />
+    <state x="602" y="265" width="380" height="410" key="FileChooserDialogImpl" timestamp="1595840214198">
+      <screen x="0" y="0" width="1920" height="1051" />
     </state>
+    <state x="602" y="265" width="380" height="410" key="FileChooserDialogImpl/0.0.1920.1051@0.0.1920.1051" timestamp="1595840214198" />
     <state x="802" y="383" width="424" height="551" key="FileChooserDialogImpl/0.27.2560.1413@0.27.2560.1413" timestamp="1595440684565" />
-    <state width="1872" height="264" key="GridCell.Tab.0.bottom" timestamp="1595510620971">
+    <state width="1872" height="301" key="GridCell.Tab.0.bottom" timestamp="1595855831031">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="264" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1595510620971" />
+    <state width="1872" height="301" key="GridCell.Tab.0.bottom/0.0.1920.1051@0.0.1920.1051" timestamp="1595855831031" />
     <state width="2514" height="359" key="GridCell.Tab.0.bottom/0.27.2560.1413@0.27.2560.1413" timestamp="1595443273232" />
-    <state width="1872" height="264" key="GridCell.Tab.0.center" timestamp="1595510620970">
+    <state width="1872" height="301" key="GridCell.Tab.0.center" timestamp="1595855831030">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="264" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1595510620970" />
+    <state width="1872" height="301" key="GridCell.Tab.0.center/0.0.1920.1051@0.0.1920.1051" timestamp="1595855831030" />
     <state width="2514" height="359" key="GridCell.Tab.0.center/0.27.2560.1413@0.27.2560.1413" timestamp="1595443273232" />
-    <state width="1872" height="264" key="GridCell.Tab.0.left" timestamp="1595510620969">
+    <state width="1872" height="301" key="GridCell.Tab.0.left" timestamp="1595855831030">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="264" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1595510620969" />
+    <state width="1872" height="301" key="GridCell.Tab.0.left/0.0.1920.1051@0.0.1920.1051" timestamp="1595855831030" />
     <state width="2514" height="359" key="GridCell.Tab.0.left/0.27.2560.1413@0.27.2560.1413" timestamp="1595443273231" />
-    <state width="1872" height="264" key="GridCell.Tab.0.right" timestamp="1595510620970">
+    <state width="1872" height="301" key="GridCell.Tab.0.right" timestamp="1595855831031">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state width="1872" height="264" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1595510620970" />
+    <state width="1872" height="301" key="GridCell.Tab.0.right/0.0.1920.1051@0.0.1920.1051" timestamp="1595855831031" />
     <state width="2514" height="359" key="GridCell.Tab.0.right/0.27.2560.1413@0.27.2560.1413" timestamp="1595443273232" />
     <state x="688" y="210" width="537" height="633" key="RollbackChangesDialog" timestamp="1594215022321">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
     <state x="688" y="210" width="537" height="633" key="RollbackChangesDialog/0.0.1920.1051@0.0.1920.1051" timestamp="1594215022321" />
-    <state x="596" y="138" width="1022" height="737" key="SettingsEditor" timestamp="1595500198694">
+    <state x="191" y="133" width="1074" height="742" key="SettingsEditor" timestamp="1595855828231">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state x="596" y="138" key="SettingsEditor/0.0.1920.1051@0.0.1920.1051" timestamp="1595500198694" />
+    <state x="191" y="133" width="1074" height="742" key="SettingsEditor/0.0.1920.1051@0.0.1920.1051" timestamp="1595855828231" />
     <state x="1379" y="260" width="1022" height="737" key="SettingsEditor/0.27.2560.1413@0.27.2560.1413" timestamp="1595437570680" />
     <state x="555" y="262" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1595494301177">
       <screen x="0" y="0" width="1920" height="1051" />
@@ -241,10 +246,10 @@
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
     <state x="735" y="441" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1051@0.0.1920.1051" timestamp="1594214533113" />
-    <state x="657" y="265" width="606" height="622" key="find.popup" timestamp="1595400290629">
+    <state x="657" y="265" width="606" height="622" key="find.popup" timestamp="1595841632501">
       <screen x="0" y="0" width="1920" height="1051" />
     </state>
-    <state x="657" y="265" width="606" height="622" key="find.popup/0.0.1920.1051@0.0.1920.1051" timestamp="1595400290629" />
+    <state x="657" y="265" width="606" height="622" key="find.popup/0.0.1920.1051@0.0.1920.1051" timestamp="1595841632501" />
     <state x="758" y="128" width="1189" height="1017" key="find.popup/0.27.2560.1413@0.27.2560.1413" timestamp="1594850205521" />
     <state width="1183" height="763" key="javadoc.popup.new" timestamp="1595442585437">
       <screen x="0" y="27" width="2560" height="1413" />

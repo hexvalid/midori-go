@@ -23,15 +23,22 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="form-group">
-                <div class="g-recaptcha" data-sitekey="6LcIqLQZAAAAAOm0o2qu6XMVypxU5ZRDu9CNtiQB"></div>
+                <div class="g-recaptcha" data-sitekey="6LcIqLQZAAAAAOm0o2qu6XMVypxU5ZRDu9CNtiQB"
+                     data-callback="enableSignIn"></div>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                <button type="submit" id="signin" disabled="disabled"
+                        class="btn btn-primary btn-block btn-flat">Sign In
+                </button>
             </div>
-
         </form>
     </div>
 </div>
 {{template "libs_footer.tmpl"}}
+<script>
+    function enableSignIn() {
+        document.getElementById("signin").disabled = false;
+    }
+</script>
 </body>
 </html>
